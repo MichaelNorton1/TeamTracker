@@ -12,7 +12,7 @@ const useStyles = makeStyles({
     maxWidth: "auto",
   },
 
-  media: { height: "100%", width: 275, padding: "10%" },
+  media: { height: "100%", width: 200, padding: "10%" },
 });
 
 const League = ({ epl, showMe }) => {
@@ -20,7 +20,7 @@ const League = ({ epl, showMe }) => {
   return epl === undefined ? (
     <div></div>
   ) : (
-    <Grid key="ok" container className={classes.root} cols={4}>
+    <Grid key="ok" spacing={4} container className={classes.root} cols={4}>
       {epl.map((team) => (
         <Grid key={team.strTeam} item xs>
           {" "}

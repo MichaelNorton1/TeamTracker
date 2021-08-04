@@ -34,13 +34,17 @@ function App() {
       .then((data) => setEpl(data.teams));
   }, []);
   const showMe = (e) => {
-    setTeam(e.target.name);
+    console.log(typeof e.target.name);
+    e.target.name !== undefined && e.target.name.length > 0
+      ? setTeam(e.target.name)
+      : setTeam(undefined);
 
     //e.target.innerText
   };
   const filtered = epl.filter((x) => x.strTeam === team);
-  console.log(filtered[0]);
-  console.log(team);
+  const toggle = () => {
+    setTeam(undefined);
+  };
   return (
     <div className="">
       <Nav></Nav>
@@ -48,13 +52,9 @@ function App() {
         <League epl={epl} showMe={showMe}></League>
       ) : (
         <div>
-          <Card
-            name={filtered[0].strTeam}
-            onClick={showMe}
-            value={filtered[0].strTeam}
-          >
-            <ArrowBackIcon />
+          <Card name={filtered[0].strTeam} value={filtered[0].strTeam}>
             <CardActionArea>
+              <ArrowBackIcon fontSize="large" onClick={toggle} />
               <CardMedia
                 cursor="pointer"
                 name={filtered[0].strTeam}
