@@ -1,0 +1,54 @@
+import {
+  Card,
+  CardMedia,
+  Grid,
+  CardContent,
+  Typography,
+  CardActionArea,
+  makeStyles,
+} from "@material-ui/core";
+const useStyles = makeStyles({
+  root: {
+    maxWidth: "auto",
+  },
+
+  media: { height: "100%", width: 275, padding: "10%" },
+});
+
+const League = ({ epl, showMe }) => {
+  const classes = useStyles();
+  return epl === undefined ? (
+    <div></div>
+  ) : (
+    <Grid key="ok" container className={classes.root} cols={4}>
+      {epl.map((team) => (
+        <Grid key={team.strTeam} item xs>
+          {" "}
+          <Card name={team.strTeam} onClick={showMe} value={team.strTeam}>
+            <CardActionArea>
+              <CardMedia
+                cursor="pointer"
+                name={team.strTeam}
+                className={classes.media}
+                component="img"
+                image={team.strTeamBadge}
+              />
+              <CardContent name={team.strTeam}>
+                <Typography
+                  name={team.strTeam}
+                  align="center"
+                  variant="h5"
+                  color="textPrimary"
+                  component="p"
+                >
+                  {team.strTeam}
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        </Grid>
+      ))}
+    </Grid>
+  );
+};
+export default League;
