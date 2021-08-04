@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/TeamTracker/static/css/main.a617e044.chunk.css",
+    "main.js": "/TeamTracker/static/js/main.8c68d5c4.chunk.js",
+    "main.js.map": "/TeamTracker/static/js/main.8c68d5c4.chunk.js.map",
+    "runtime-main.js": "/TeamTracker/static/js/runtime-main.ba1d1abc.js",
+    "runtime-main.js.map": "/TeamTracker/static/js/runtime-main.ba1d1abc.js.map",
+    "static/js/2.95a57345.chunk.js": "/TeamTracker/static/js/2.95a57345.chunk.js",
+    "static/js/2.95a57345.chunk.js.map": "/TeamTracker/static/js/2.95a57345.chunk.js.map",
+    "static/js/3.414f6d9b.chunk.js": "/TeamTracker/static/js/3.414f6d9b.chunk.js",
+    "static/js/3.414f6d9b.chunk.js.map": "/TeamTracker/static/js/3.414f6d9b.chunk.js.map",
+    "index.html": "/TeamTracker/index.html",
+    "static/css/main.a617e044.chunk.css.map": "/TeamTracker/static/css/main.a617e044.chunk.css.map",
+    "static/js/2.95a57345.chunk.js.LICENSE.txt": "/TeamTracker/static/js/2.95a57345.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.ba1d1abc.js",
+    "static/js/2.95a57345.chunk.js",
+    "static/css/main.a617e044.chunk.css",
+    "static/js/main.8c68d5c4.chunk.js"
+  ]
+}
