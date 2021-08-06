@@ -118,7 +118,7 @@ export default function Nav() {
           </Typography>
           <Box display="flex">
             {" "}
-            <Button color="inherit">Login</Button>
+            <Button color="inherit">Log Out</Button>
           </Box>
         </Toolbar>
       </AppBar>

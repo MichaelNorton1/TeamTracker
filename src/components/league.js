@@ -13,7 +13,12 @@ const useStyles = makeStyles({
     maxWidth: "auto",
   },
 
-  media: { height: "100%", width: 200, padding: "10%" },
+  media: {
+    margin: "auto",
+    height: "auto",
+    width: 200,
+    padding: "10%",
+  },
 });
 
 const League = ({ epl, showMe }) => {
@@ -21,7 +26,20 @@ const League = ({ epl, showMe }) => {
   return epl === undefined ? (
     <div></div>
   ) : (
-    <Grid key="ok" spacing={4} container className={classes.root} cols={4}>
+    <Grid
+      key="ok"
+      spacing={4}
+      sx={{
+        display: "grid",
+        gridAutoFlow: "row",
+        gridTemplateColumns: "repeat(5, 1fr)",
+
+        gap: 4,
+      }}
+      container
+      className={classes.root}
+      cols={1}
+    >
       {epl.map((team) => (
         <Grid key={team.strTeam} item xs>
           {" "}
@@ -38,7 +56,7 @@ const League = ({ epl, showMe }) => {
                 <Typography
                   name={team.strTeam}
                   align="center"
-                  variant="h5"
+                  variant="h6"
                   color="textPrimary"
                   component="p"
                 >

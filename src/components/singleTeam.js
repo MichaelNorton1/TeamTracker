@@ -28,7 +28,7 @@ const SingleTeam = ({ filtered, toggle }) => {
           <CardContent name={filtered[0].strTeam}>
             <Typography
               name={filtered[0].strDescriptionEN}
-              align="center"
+              align="left"
               variant="h5"
               color="textPrimary"
               component="p"
