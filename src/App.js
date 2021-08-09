@@ -7,7 +7,8 @@ import SingleTeam from "../src/components/singleTeam";
 
 function App() {
   const [team, setTeam] = useState(undefined);
-
+  const favs = [];
+  const [favorites, setFavorites] = useState(favs);
   const [epl, setEpl] = useState([]);
   useEffect(() => {
     //API Call inside of useEffect so it is only called once
@@ -17,6 +18,7 @@ function App() {
       .then((res) => res.json())
       .then((data) => setEpl(data.teams));
   }, []);
+
   const showMe = (e) => {
     e.target.name !== undefined && e.target.name.length > 0
       ? setTeam(e.target.name)
@@ -26,13 +28,33 @@ function App() {
   const toggle = () => {
     setTeam(undefined);
   };
+  const favHandler = (e) => {
+    setFavorites((ne) => {
+      const dupl = ne.filter((x) => x === team);
+
+      //x === team);
+
+      if (dupl[0] === team) {
+        console.log("duplicate");
+        return [...ne];
+      } else {
+        return [team, ...ne];
+      }
+    });
+  };
+
   return (
     <div className="">
       <Nav></Nav>
-      {team === undefined ? (
+      {team === undefined ? ( //and favorites tab not fales
         <League epl={epl} showMe={showMe}></League>
       ) : (
-        <SingleTeam filtered={filtered} toggle={toggle}></SingleTeam>
+        <SingleTeam
+          filtered={filtered}
+          favorites={favorites}
+          favHandler={favHandler}
+          toggle={toggle}
+        ></SingleTeam>
       )}
     </div>
   );

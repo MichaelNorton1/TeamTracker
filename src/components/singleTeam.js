@@ -1,23 +1,67 @@
 import {
+  Button,
   Card,
   CardMedia,
   makeStyles,
   CardContent,
   Typography,
   CardActionArea,
+  ThemeProvider,
+  createTheme,
 } from "@material-ui/core";
-
+import AddIcon from "@material-ui/icons/Add";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import { useEffect, useState } from "react";
 const useStyles = makeStyles({
-  media: { height: "100%", width: 275 },
+  media: { height: "100%", width: 275, margin: "auto" },
+  title: { display: "flex" },
 });
-const SingleTeam = ({ filtered, toggle }) => {
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#f50057",
+    },
+  },
+});
+
+const SingleTeam = ({ filtered, toggle, favHandler, favorites }) => {
   const classes = useStyles();
+
+  const [buttonText, setButtonText] = useState("add to favorites");
+  const [dis, setDisable] = useState(false);
+  useEffect(() => {
+    if (typeof filtered === "object" && favorites.length > 0 && dis === false) {
+      return favorites.forEach((team) =>
+        team === filtered[0].strTeam
+          ? (setButtonText("added to favorites"), setDisable(true))
+          : setButtonText("add to favorites")
+      );
+    }
+  });
+
   return (
     <div>
+      <ThemeProvider theme={theme}>
+        {" "}
+        <Button
+          disabled={dis}
+          name={filtered[0].strTeam}
+          onClick={favHandler}
+          color="primary"
+          variant="contained"
+          startIcon={<AddIcon />}
+        >
+          {buttonText}
+        </Button>
+      </ThemeProvider>
       <Card name={filtered[0].strTeam} value={filtered[0].strTeam}>
         <CardActionArea>
-          <ArrowBackIcon fontSize="large" onClick={toggle} />
+          <ArrowBackIcon
+            className={classes.title}
+            fontSize="large"
+            onClick={toggle}
+          />
+
           <CardMedia
             cursor="pointer"
             name={filtered[0].strTeam}
