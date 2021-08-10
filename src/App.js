@@ -4,12 +4,15 @@ import { useEffect, useState } from "react";
 import Nav from "../src/components/nav.js";
 import League from "../src/components/league.js";
 import SingleTeam from "../src/components/singleTeam";
+import Favorites from "../src/components/favorites";
+import { Home } from "@material-ui/icons";
 
 function App() {
   const [team, setTeam] = useState(undefined);
   const favs = [];
   const [favorites, setFavorites] = useState(favs);
   const [epl, setEpl] = useState([]);
+  const [showfavs, setShowFavs] = useState(false);
   useEffect(() => {
     //API Call inside of useEffect so it is only called once
     fetch(
@@ -29,25 +32,33 @@ function App() {
     setTeam(undefined);
   };
   const favHandler = (e) => {
-    setFavorites((ne) => {
-      const dupl = ne.filter((x) => x === team);
-
-      //x === team);
-
+    //filtering out teams that have already been added to favorites list
+    setFavorites((prev) => {
+      const dupl = prev.filter((x) => x === team);
+      const obj = epl.filter((x) => x.strTeam === team);
       if (dupl[0] === team) {
-        console.log("duplicate");
-        return [...ne];
+        return [...prev];
       } else {
-        return [team, ...ne];
+        return [...obj, ...prev];
       }
     });
   };
-
+  const homeHandler = () => {
+    setShowFavs(false);
+    setTeam(undefined);
+  };
+  const stateHandler = () => {
+    setShowFavs(true);
+    console.log("click");
+  };
+  console.log(favorites);
   return (
     <div className="">
-      <Nav></Nav>
-      {team === undefined ? ( //and favorites tab not fales
+      <Nav stateHandler={stateHandler} homeHandler={homeHandler}></Nav>
+      {team === undefined && showfavs === false ? ( //and favorites tab not fales
         <League epl={epl} showMe={showMe}></League>
+      ) : showfavs === true ? (
+        <Favorites favorites={favorites}></Favorites>
       ) : (
         <SingleTeam
           filtered={filtered}

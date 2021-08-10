@@ -78,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
   title: { flexGrow: 1 },
 }));
 
-export default function Nav() {
+export default function Nav({ stateHandler, homeHandler }) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
@@ -141,9 +141,13 @@ export default function Nav() {
           </IconButton>
         </div>
         <Divider />
-        <List>
-          <ListItem button>Home</ListItem>
-          <ListItem button>Favorites</ListItem>
+        <List onClick={handleDrawerClose}>
+          <ListItem onClick={homeHandler} button>
+            Home
+          </ListItem>
+          <ListItem onClick={stateHandler} button>
+            Favorites
+          </ListItem>
           <ListItem button>LogOut</ListItem>
           <ListItem button></ListItem>
         </List>

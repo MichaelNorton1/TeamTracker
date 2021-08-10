@@ -31,8 +31,8 @@ const SingleTeam = ({ filtered, toggle, favHandler, favorites }) => {
   const [dis, setDisable] = useState(false);
   useEffect(() => {
     if (typeof filtered === "object" && favorites.length > 0 && dis === false) {
-      return favorites.forEach((team) =>
-        team === filtered[0].strTeam
+      return favorites.map((team) =>
+        team.strTeam === filtered[0].strTeam
           ? (setButtonText("added to favorites"), setDisable(true))
           : setButtonText("add to favorites")
       );
