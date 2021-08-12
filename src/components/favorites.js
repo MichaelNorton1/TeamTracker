@@ -14,10 +14,9 @@ const useStyles = makeStyles({
   },
 
   media: {
-    margin: "auto",
+    margin: "left",
     height: "auto",
     width: 200,
-    padding: "10%",
   },
 });
 
@@ -34,8 +33,14 @@ const Favorites = (favorites) => {
             <Card>
               <CardActionArea>
                 {" "}
-                <Typography>{team.strTeam}</Typography>
-                <CardMedia></CardMedia>
+                <CardMedia
+                  cursor="pointer"
+                  name={team.strTeam}
+                  className={classes.media}
+                  component="img"
+                  image={team.strTeamBadge}
+                ></CardMedia>
+                <Typography align="center">{team.strTeam}</Typography>
               </CardActionArea>
             </Card>
           </Grid>

@@ -26,6 +26,9 @@ const theme = createTheme({
 
 const SingleTeam = ({ filtered, toggle, favHandler, favorites }) => {
   const classes = useStyles();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const [buttonText, setButtonText] = useState("add to favorites");
   const [dis, setDisable] = useState(false);
