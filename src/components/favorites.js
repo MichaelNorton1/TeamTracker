@@ -72,12 +72,12 @@ const Favorites = (favorites) => {
               <List>
                 <ListItem>
                   <Button variant="outlined" align="right">
-                    Next Five Opponents
+                    to be added*
                   </Button>
                 </ListItem>
                 <ListItem>
                   <Button variant="outlined" align="right">
-                    Remove from Favorites
+                    to be added*
                   </Button>
                 </ListItem>
                 <ListItem>
