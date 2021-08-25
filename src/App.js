@@ -5,7 +5,6 @@ import Nav from "../src/components/nav.js";
 import League from "../src/components/league.js";
 import SingleTeam from "../src/components/singleTeam";
 import Favorites from "../src/components/favorites";
-import { Home } from "@material-ui/icons";
 
 function App() {
   const [team, setTeam] = useState(undefined);
@@ -34,14 +33,26 @@ function App() {
   const favHandler = (e) => {
     //filtering out teams that have already been added to favorites list
     setFavorites((prev) => {
-      const dupl = prev.filter((x) => x === team);
-      const obj = epl.filter((x) => x.strTeam === team);
-      if (dupl[0] === team) {
-        return [...prev];
-      } else {
-        return [...obj, ...prev];
+      if (prev !== undefined) {
+        const dupl = prev.filter((x) => x === team);
+        const obj = epl.filter((x) => x.strTeam === team);
+        if (dupl[0] === team) {
+          return [...prev];
+        } else {
+          return [...obj, ...prev];
+        }
+      } else if (favorites === undefined) {
+        const obj = epl.filter((x) => x.strTeam === team);
+        return [...obj];
       }
     });
+  };
+  const deleteHandler = (team) => {
+    const check = favorites.filter((delteam) => delteam.strTeam !== team);
+
+    setFavorites(check);
+
+    // setFavorites((prev) => {});
   };
   const homeHandler = () => {
     setShowFavs(false);
@@ -49,16 +60,18 @@ function App() {
   };
   const stateHandler = () => {
     setShowFavs(true);
-    console.log("click");
   };
-  console.log(favorites);
+
   return (
     <div className="">
       <Nav stateHandler={stateHandler} homeHandler={homeHandler}></Nav>
       {team === undefined && showfavs === false ? ( //and favorites tab not fales
         <League epl={epl} showMe={showMe}></League>
       ) : showfavs === true ? (
-        <Favorites favorites={favorites}></Favorites>
+        <Favorites
+          favorites={favorites}
+          deleteHandler={deleteHandler}
+        ></Favorites>
       ) : (
         <SingleTeam
           filtered={filtered}

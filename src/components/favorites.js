@@ -2,17 +2,26 @@ import {
   Card,
   CardMedia,
   Grid,
-  CardContent,
   Typography,
   CardActionArea,
   makeStyles,
+  Button,
+  List,
+  ListItem,
 } from "@material-ui/core";
+import { useEffect } from "react";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 const useStyles = makeStyles({
   root: {
     maxWidth: "auto",
   },
-
+  button: {
+    height: "auto",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+  },
+  title: { display: "flex" },
   media: {
     margin: "left",
     height: "auto",
@@ -21,16 +30,34 @@ const useStyles = makeStyles({
 });
 
 const Favorites = (favorites) => {
-  console.log(favorites.favorites.length);
+  const func = () => {
+    const ids = favorites.favorites.map((team) => team.idTeam);
+    const names = favorites.favorites.map((team) => team.strTeam);
+    const stuff = [names, ids];
+    fetch("http://localhost:3001/favorites", {
+      method: "post",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify(stuff),
+    });
+  };
+
+  useEffect(() => {
+    if (favorites.favorites !== undefined) {
+      func();
+    }
+  }, [favorites.favorites]);
+
   const classes = useStyles();
   return (
     <Grid>
-      {favorites.favorites.length < 1 ? (
+      {favorites.favorites === undefined ||
+      favorites.favorites.length < 1 ||
+      favorites.favorites === null ? (
         <div>Add teams to Favorites!</div>
       ) : (
         favorites.favorites.map((team) => (
           <Grid>
-            <Card>
+            <Card className={classes.title} key={team}>
               <CardActionArea>
                 {" "}
                 <CardMedia
@@ -41,7 +68,32 @@ const Favorites = (favorites) => {
                   image={team.strTeamBadge}
                 ></CardMedia>
                 <Typography align="center">{team.strTeam}</Typography>
-              </CardActionArea>
+              </CardActionArea>{" "}
+              <List>
+                <ListItem>
+                  <Button variant="outlined" align="right">
+                    Next Five Opponents
+                  </Button>
+                </ListItem>
+                <ListItem>
+                  <Button variant="outlined" align="right">
+                    Remove from Favorites
+                  </Button>
+                </ListItem>
+                <ListItem>
+                  <Button
+                    onClick={() => {
+                      favorites.deleteHandler(team.strTeam);
+                    }}
+                    align="right"
+                    variant="outlined"
+                    color="secondary"
+                    startIcon={<DeleteIcon />}
+                  >
+                    Remove from Favorites
+                  </Button>
+                </ListItem>
+              </List>{" "}
             </Card>
           </Grid>
         ))

@@ -32,11 +32,21 @@ const SingleTeam = ({ filtered, toggle, favHandler, favorites }) => {
 
   const [buttonText, setButtonText] = useState("add to favorites");
   const [dis, setDisable] = useState(false);
+  const func = () => {
+    favHandler();
+    setButtonText("added to favorites");
+    setDisable(true);
+  };
   useEffect(() => {
-    if (typeof filtered === "object" && favorites.length > 0 && dis === false) {
+    if (
+      typeof filtered === "object" &&
+      favorites !== undefined &&
+      favorites[0] !== undefined &&
+      dis === false
+    ) {
       return favorites.map((team) =>
         team.strTeam === filtered[0].strTeam
-          ? (setButtonText("added to favorites"), setDisable(true))
+          ? func()
           : setButtonText("add to favorites")
       );
     }
@@ -49,7 +59,9 @@ const SingleTeam = ({ filtered, toggle, favHandler, favorites }) => {
         <Button
           disabled={dis}
           name={filtered[0].strTeam}
-          onClick={favHandler}
+          onClick={() => {
+            func();
+          }}
           color="primary"
           variant="contained"
           startIcon={<AddIcon />}
