@@ -5,10 +5,12 @@ import Nav from "../src/components/nav.js";
 import League from "../src/components/league.js";
 import SingleTeam from "../src/components/singleTeam";
 import Favorites from "../src/components/favorites";
+import Login from "../src/components/login";
 
 function App() {
   const [team, setTeam] = useState(undefined);
   const favs = [];
+  const [signedIn, setSignedIn] = useState(false);
   const [favorites, setFavorites] = useState(favs);
   const [epl, setEpl] = useState([]);
   const [showfavs, setShowFavs] = useState(false);
@@ -34,25 +36,34 @@ function App() {
     //filtering out teams that have already been added to favorites list
     setFavorites((prev) => {
       if (prev !== undefined) {
-        const dupl = prev.filter((x) => x === team);
+        const dupl = favorites.filter((x) => x.strTeam === team);
         const obj = epl.filter((x) => x.strTeam === team);
-        if (dupl[0] === team) {
+        console.log(dupl, " dupilicate");
+        if (dupl.length > 0) {
           return [...prev];
         } else {
           return [...obj, ...prev];
         }
       } else if (favorites === undefined) {
-        const obj = epl.filter((x) => x.strTeam === team);
-        return [...obj];
+        return [...prev];
       }
     });
   };
+  console.log(favorites, " favorites");
   const deleteHandler = (team) => {
     const check = favorites.filter((delteam) => delteam.strTeam !== team);
 
     setFavorites(check);
 
     // setFavorites((prev) => {});
+  };
+
+  const signIn = (e) => {
+    if (signedIn === true) {
+      setSignedIn(setSignedIn(false));
+    } else {
+      setSignedIn(true);
+    }
   };
   const homeHandler = () => {
     setShowFavs(false);
@@ -61,24 +72,33 @@ function App() {
   const stateHandler = () => {
     setShowFavs(true);
   };
-
+  //need to make a register page and backed list to push to
   return (
     <div className="">
-      <Nav stateHandler={stateHandler} homeHandler={homeHandler}></Nav>
-      {team === undefined && showfavs === false ? ( //and favorites tab not fales
-        <League epl={epl} showMe={showMe}></League>
-      ) : showfavs === true ? (
-        <Favorites
-          favorites={favorites}
-          deleteHandler={deleteHandler}
-        ></Favorites>
+      <Nav
+        stateHandler={stateHandler}
+        homeHandler={homeHandler}
+        signIn={signIn}
+        signedIn={signedIn}
+      ></Nav>
+      {signedIn === true ? (
+        team === undefined && showfavs === false ? ( //and favorites tab not fales
+          <League epl={epl} showMe={showMe}></League>
+        ) : showfavs === true ? (
+          <Favorites
+            favorites={favorites}
+            deleteHandler={deleteHandler}
+          ></Favorites>
+        ) : (
+          <SingleTeam
+            filtered={filtered}
+            favorites={favorites}
+            favHandler={favHandler}
+            toggle={toggle}
+          ></SingleTeam>
+        )
       ) : (
-        <SingleTeam
-          filtered={filtered}
-          favorites={favorites}
-          favHandler={favHandler}
-          toggle={toggle}
-        ></SingleTeam>
+        <Login signIn={signIn}></Login>
       )}
     </div>
   );

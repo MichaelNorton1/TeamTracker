@@ -33,7 +33,10 @@ const Favorites = (favorites) => {
   const func = () => {
     const ids = favorites.favorites.map((team) => team.idTeam);
     const names = favorites.favorites.map((team) => team.strTeam);
-    const stuff = [names, ids];
+    const stuff = names.map((name, id) => {
+      return { teams: name, num: ids[id] };
+    });
+
     fetch("http://localhost:3001/favorites", {
       method: "post",
       headers: { "Content-type": "application/json" },

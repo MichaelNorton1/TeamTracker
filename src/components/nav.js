@@ -17,6 +17,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 
 import { Button, Box } from "@material-ui/core";
+import SignIn from "./login";
 
 const drawerWidth = 240;
 
@@ -78,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
   title: { flexGrow: 1 },
 }));
 
-export default function Nav({ stateHandler, homeHandler }) {
+export default function Nav({ stateHandler, homeHandler, signIn, signedIn }) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
@@ -95,32 +96,43 @@ export default function Nav({ stateHandler, homeHandler }) {
     <div className={classes.root}>
       <CssBaseline />
 
-      <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
-      >
-        <Toolbar>
+      {signedIn === true ? (
+        <AppBar
+          position="fixed"
+          className={clsx(classes.appBar, {
+            [classes.appBarShift]: open,
+          })}
+        >
           {" "}
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classes.menuButton, open && classes.hide)}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography className={classes.title} variant="h6" noWrap>
-            Team Tracker
-          </Typography>
-          <Box display="flex">
-            {" "}
-            <Button color="inherit">Log Out</Button>
-          </Box>
-        </Toolbar>
-      </AppBar>
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              className={clsx(classes.menuButton, open && classes.hide)}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography className={classes.title} variant="h6" noWrap>
+              Team Tracker
+            </Typography>
+            <Box display="flex">
+              {" "}
+              <Button onClick={signIn} color="inherit">
+                Log Out
+              </Button>
+            </Box>
+          </Toolbar>
+        </AppBar>
+      ) : (
+        <AppBar
+          position="fixed"
+          className={clsx(classes.appBar, {
+            [classes.appBarShift]: open,
+          })}
+        ></AppBar>
+      )}
       <Drawer
         className={classes.drawer}
         variant="persistent"
@@ -148,7 +160,9 @@ export default function Nav({ stateHandler, homeHandler }) {
           <ListItem onClick={stateHandler} button>
             Favorites
           </ListItem>
-          <ListItem button>LogOut</ListItem>
+          <ListItem button onClick={signIn}>
+            LogOut
+          </ListItem>
           <ListItem button></ListItem>
         </List>
         <Divider />
