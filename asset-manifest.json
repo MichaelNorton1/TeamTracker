@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/TeamTracker/static/css/main.a617e044.chunk.css",
-    "main.js": "/TeamTracker/static/js/main.3d034c34.chunk.js",
-    "main.js.map": "/TeamTracker/static/js/main.3d034c34.chunk.js.map",
-    "runtime-main.js": "/TeamTracker/static/js/runtime-main.46ed132e.js",
-    "runtime-main.js.map": "/TeamTracker/static/js/runtime-main.46ed132e.js.map",
-    "static/js/2.88a58af7.chunk.js": "/TeamTracker/static/js/2.88a58af7.chunk.js",
-    "static/js/2.88a58af7.chunk.js.map": "/TeamTracker/static/js/2.88a58af7.chunk.js.map",
-    "static/js/3.8acf61d0.chunk.js": "/TeamTracker/static/js/3.8acf61d0.chunk.js",
-    "static/js/3.8acf61d0.chunk.js.map": "/TeamTracker/static/js/3.8acf61d0.chunk.js.map",
+    "main.js": "/TeamTracker/static/js/main.f8bf3f91.chunk.js",
+    "main.js.map": "/TeamTracker/static/js/main.f8bf3f91.chunk.js.map",
+    "runtime-main.js": "/TeamTracker/static/js/runtime-main.81023b50.js",
+    "runtime-main.js.map": "/TeamTracker/static/js/runtime-main.81023b50.js.map",
+    "static/js/2.8540295f.chunk.js": "/TeamTracker/static/js/2.8540295f.chunk.js",
+    "static/js/2.8540295f.chunk.js.map": "/TeamTracker/static/js/2.8540295f.chunk.js.map",
+    "static/js/3.18376c8a.chunk.js": "/TeamTracker/static/js/3.18376c8a.chunk.js",
+    "static/js/3.18376c8a.chunk.js.map": "/TeamTracker/static/js/3.18376c8a.chunk.js.map",
     "index.html": "/TeamTracker/index.html",
     "static/css/main.a617e044.chunk.css.map": "/TeamTracker/static/css/main.a617e044.chunk.css.map",
-    "static/js/2.88a58af7.chunk.js.LICENSE.txt": "/TeamTracker/static/js/2.88a58af7.chunk.js.LICENSE.txt"
+    "static/js/2.8540295f.chunk.js.LICENSE.txt": "/TeamTracker/static/js/2.8540295f.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.46ed132e.js",
-    "static/js/2.88a58af7.chunk.js",
+    "static/js/runtime-main.81023b50.js",
+    "static/js/2.8540295f.chunk.js",
     "static/css/main.a617e044.chunk.css",
-    "static/js/main.3d034c34.chunk.js"
+    "static/js/main.f8bf3f91.chunk.js"
   ]
 }
