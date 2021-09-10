@@ -30,26 +30,30 @@ const useStyles = makeStyles({
 });
 
 const Favorites = (favorites) => {
-  const func = () => {
-    const ids = favorites.favorites.map((team) => team.idTeam);
-    const names = favorites.favorites.map((team) => team.strTeam);
-    const stuff = names.map((name, id) => {
-      return { teams: name, num: ids[id] };
-    });
-
-    fetch("http://localhost:3001/favorites", {
-      method: "post",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify(stuff),
-    });
-  };
-
   useEffect(() => {
-    if (favorites.favorites !== undefined) {
-      func();
+    if (favorites.favorites !== undefined && favorites.favorites.length > 0) {
+      const ids = favorites.favorites.map((team) => team.idTeam);
+      const names = favorites.favorites.map((team) => team.strTeam);
+      const images = favorites.favorites.map((team) => team.strTeamBadge);
+      console.log(names);
+      const stuff = names.map((name, id) => {
+        console.log(id);
+        return {
+          strTeam: name,
+          idTeam: ids[id],
+          strTeamBadge: images[id].toString(),
+        };
+      });
+      console.log(stuff);
+      fetch("http://localhost:3001/favorites", {
+        method: "post",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify(stuff),
+      });
     }
   }, [favorites.favorites]);
 
+  console.log(favorites.favorites);
   const classes = useStyles();
   return (
     <Grid>

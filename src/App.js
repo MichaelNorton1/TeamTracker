@@ -15,6 +15,9 @@ function App() {
   const [epl, setEpl] = useState([]);
   const [showfavs, setShowFavs] = useState(false);
   useEffect(() => {
+    fetch("http://localhost:3001/favorites")
+      .then((res) => res.json())
+      .then((data) => setFavorites(data));
     //API Call inside of useEffect so it is only called once
     fetch(
       "https://www.thesportsdb.com/api/v1/json/1/search_all_teams.php?l=English%20Premier%20League"
@@ -49,10 +52,15 @@ function App() {
       }
     });
   };
-  console.log(favorites, " favorites");
-  const deleteHandler = (team) => {
-    const check = favorites.filter((delteam) => delteam.strTeam !== team);
 
+  const deleteHandler = (team) => {
+    const final = { team: team };
+    const check = favorites.filter((delteam) => delteam.strTeam !== team);
+    fetch("http://localhost:3001/favorites", {
+      method: "delete",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify(final),
+    });
     setFavorites(check);
 
     // setFavorites((prev) => {});
