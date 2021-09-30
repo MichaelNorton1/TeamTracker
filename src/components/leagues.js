@@ -21,9 +21,9 @@ const useStyles = makeStyles({
   },
 });
 
-const League = ({ epl, showMe }) => {
+const Leagues = ({ all, setRoute }) => {
   const classes = useStyles();
-  return epl === undefined ? (
+  return all === undefined ? (
     <div></div>
   ) : (
     <Grid
@@ -40,10 +40,13 @@ const League = ({ epl, showMe }) => {
       className={classes.root}
       cols={1}
     >
-      {epl.map((team) => (
+      {all.map((team) => (
         <Grid key={team.strTeam} item xs>
-          {" "}
-          <Card name={team.strTeam} onClick={showMe} value={team.strTeam}>
+          <Card
+            name={team.strTeam}
+            onClick={() => setRoute(team.leagueId)}
+            value={team.strTeam}
+          >
             <CardActionArea>
               <CardMedia
                 cursor="pointer"
@@ -70,4 +73,4 @@ const League = ({ epl, showMe }) => {
     </Grid>
   );
 };
-export default League;
+export default Leagues;

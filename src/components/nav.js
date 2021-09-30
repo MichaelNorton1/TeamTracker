@@ -17,7 +17,6 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 
 import { Button, Box } from "@material-ui/core";
-import SignIn from "./login";
 
 const drawerWidth = 240;
 
@@ -79,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
   title: { flexGrow: 1 },
 }));
 
-export default function Nav({ stateHandler, homeHandler, signIn, signedIn }) {
+export default function Nav({ logOut, route, setRoute }) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
@@ -96,7 +95,7 @@ export default function Nav({ stateHandler, homeHandler, signIn, signedIn }) {
     <div className={classes.root}>
       <CssBaseline />
 
-      {signedIn === true ? (
+      {route !== "signIn" && route !== "register" ? (
         <AppBar
           position="fixed"
           className={clsx(classes.appBar, {
@@ -119,7 +118,7 @@ export default function Nav({ stateHandler, homeHandler, signIn, signedIn }) {
             </Typography>
             <Box display="flex">
               {" "}
-              <Button onClick={signIn} color="inherit">
+              <Button onClick={() => logOut()} color="inherit">
                 Log Out
               </Button>
             </Box>
@@ -154,13 +153,18 @@ export default function Nav({ stateHandler, homeHandler, signIn, signedIn }) {
         </div>
         <Divider />
         <List onClick={handleDrawerClose}>
-          <ListItem onClick={homeHandler} button>
+          <ListItem onClick={() => setRoute("home")} button>
             Home
           </ListItem>
-          <ListItem onClick={stateHandler} button>
+          <ListItem
+            onClick={() => {
+              setRoute("favorites");
+            }}
+            button
+          >
             Favorites
           </ListItem>
-          <ListItem button onClick={signIn}>
+          <ListItem button onClick={() => logOut()}>
             LogOut
           </ListItem>
           <ListItem button></ListItem>

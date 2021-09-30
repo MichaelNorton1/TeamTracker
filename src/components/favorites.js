@@ -2,15 +2,16 @@ import {
   Card,
   CardMedia,
   Grid,
-  Typography,
   CardActionArea,
-  makeStyles,
   Button,
   List,
   ListItem,
+  Typography,
+  makeStyles,
 } from "@material-ui/core";
+
 import { useEffect } from "react";
-import DeleteIcon from "@material-ui/icons/Delete";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const useStyles = makeStyles({
   root: {
@@ -29,41 +30,19 @@ const useStyles = makeStyles({
   },
 });
 
-const Favorites = (favorites) => {
+const Favorites = ({ favHandler, favorites, deleteHandler }) => {
   useEffect(() => {
-    if (favorites.favorites !== undefined && favorites.favorites.length > 0) {
-      const ids = favorites.favorites.map((team) => team.idTeam);
-      const names = favorites.favorites.map((team) => team.strTeam);
-      const images = favorites.favorites.map((team) => team.strTeamBadge);
-      console.log(names);
-      const stuff = names.map((name, id) => {
-        console.log(id);
-        return {
-          strTeam: name,
-          idTeam: ids[id],
-          strTeamBadge: images[id].toString(),
-        };
-      });
-      console.log(stuff);
-      fetch("http://localhost:3001/favorites", {
-        method: "post",
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify(stuff),
-      });
-    }
-  }, [favorites.favorites]);
+    favHandler();
+  }, []);
 
-  console.log(favorites.favorites);
   const classes = useStyles();
   return (
     <Grid>
-      {favorites.favorites === undefined ||
-      favorites.favorites.length < 1 ||
-      favorites.favorites === null ? (
+      {favorites === undefined || favorites.length < 1 || favorites === null ? (
         <div>Add teams to Favorites!</div>
       ) : (
-        favorites.favorites.map((team) => (
-          <Grid>
+        favorites.map((team) => (
+          <Grid key={team.strTeam}>
             <Card className={classes.title} key={team}>
               <CardActionArea>
                 {" "}
@@ -78,8 +57,12 @@ const Favorites = (favorites) => {
               </CardActionArea>{" "}
               <List>
                 <ListItem>
-                  <Button variant="outlined" align="right">
-                    to be added*
+                  <Button
+                    onClick={() => console.log(team)}
+                    variant="outlined"
+                    align="right"
+                  >
+                    Next Opponent
                   </Button>
                 </ListItem>
                 <ListItem>
@@ -90,7 +73,7 @@ const Favorites = (favorites) => {
                 <ListItem>
                   <Button
                     onClick={() => {
-                      favorites.deleteHandler(team.strTeam);
+                      deleteHandler(team.strTeam);
                     }}
                     align="right"
                     variant="outlined"

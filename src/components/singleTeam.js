@@ -2,29 +2,21 @@ import {
   Button,
   Card,
   CardMedia,
-  makeStyles,
   CardContent,
   Typography,
   CardActionArea,
-  ThemeProvider,
-  createTheme,
+  makeStyles,
 } from "@material-ui/core";
-import AddIcon from "@material-ui/icons/Add";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+
+import AddIcon from "@mui/icons-material/Add";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useEffect, useState } from "react";
 const useStyles = makeStyles({
   media: { height: "100%", width: 275, margin: "auto" },
   title: { display: "flex" },
 });
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: "#f50057",
-    },
-  },
-});
 
-const SingleTeam = ({ filtered, toggle, favHandler, favorites }) => {
+const SingleTeam = ({ filtered, setRoute, favHandler, favorites }) => {
   const classes = useStyles();
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -39,7 +31,7 @@ const SingleTeam = ({ filtered, toggle, favHandler, favorites }) => {
   };
   useEffect(() => {
     if (
-      typeof filtered === "object" &&
+      typeof filtered[0] === "object" &&
       favorites !== undefined &&
       favorites[0] !== undefined &&
       dis === false
@@ -54,27 +46,25 @@ const SingleTeam = ({ filtered, toggle, favHandler, favorites }) => {
 
   return (
     <div>
-      <ThemeProvider theme={theme}>
-        {" "}
-        <Button
-          disabled={dis}
-          name={filtered[0].strTeam}
-          onClick={() => {
-            func();
-          }}
-          color="primary"
-          variant="contained"
-          startIcon={<AddIcon />}
-        >
-          {buttonText}
-        </Button>
-      </ThemeProvider>
+      {" "}
+      <Button
+        disabled={dis}
+        name={filtered[0]}
+        onClick={() => {
+          func();
+        }}
+        color="primary"
+        variant="contained"
+        startIcon={<AddIcon />}
+      >
+        {buttonText}
+      </Button>
       <Card name={filtered[0].strTeam} value={filtered[0].strTeam}>
         <CardActionArea>
           <ArrowBackIcon
             className={classes.title}
             fontSize="large"
-            onClick={toggle}
+            onClick={() => setRoute(filtered[0].idLeague)}
           />
 
           <CardMedia

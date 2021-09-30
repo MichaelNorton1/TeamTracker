@@ -4,13 +4,11 @@ import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
-
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -31,9 +29,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Login({ setRoute, setGuest, setUserId }) {
+function Register({ setRoute, setGuest, setUserId }) {
   const [signEmail, setEmail] = useState("");
   const [pass, setPass] = useState("");
+  const [name, setName] = useState("");
 
   const onEmailChange = (event) => {
     setEmail(event.target.value);
@@ -42,28 +41,29 @@ function Login({ setRoute, setGuest, setUserId }) {
   const onPasswordChange = (event) => {
     setPass(event.target.value);
   };
+  const onNameChange = (event) => {
+    setName(event.target.value);
+  };
 
   const classes = useStyles();
-  const guestLogIn = (e) => {
-    console.log("click");
-    setGuest(true);
-    setRoute("home");
-  };
-  const userLogIn = (e) => {
+
+  const register = (e) => {
     e.preventDefault();
-    const stuff = { email: signEmail, password: pass };
-    fetch("http://localhost:3001/signin", {
+    const stuff = { email: signEmail, password: pass, name: name };
+    fetch("http://localhost:3001/register", {
       method: "post",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify(stuff),
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.userid) {
+        console.log(data);
+        if (data) {
           setRoute("home");
-          setUserId(data.userid);
+          setUserId(data);
         }
-      });
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -80,7 +80,7 @@ function Login({ setRoute, setGuest, setUserId }) {
           className={classes.form}
           method="post"
           noValidate
-          onSubmit={userLogIn}
+          onSubmit={register}
         >
           <TextField
             onChange={onEmailChange}
@@ -106,6 +106,17 @@ function Login({ setRoute, setGuest, setUserId }) {
             id="password"
             autoComplete="current-password"
           />
+          <TextField
+            onChange={onNameChange}
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="name"
+            label="name"
+            type="name"
+            id="name"
+          />
 
           <Button
             type="submit"
@@ -113,18 +124,10 @@ function Login({ setRoute, setGuest, setUserId }) {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={() => userLogIn}
+            onClick={() => register}
           >
-            Sign In
+            Register
           </Button>
-
-          <Grid container>
-            <Grid onClick={() => setRoute("register")} item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
         </form>
         <Button
           type="submit"
@@ -132,12 +135,12 @@ function Login({ setRoute, setGuest, setUserId }) {
           variant="contained"
           color="primary"
           className={classes.submit}
-          onClick={() => guestLogIn()}
+          onClick={() => setRoute("signIn")}
         >
-          Sign in as guest
+          Sign in
         </Button>
       </div>
     </Container>
   );
 }
-export default Login;
+export default Register;
