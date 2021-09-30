@@ -8,7 +8,7 @@ import {
   ListItem,
   Typography,
 } from "@mui/material";
-
+import key from "./config.js";
 import { styled } from "@mui/material/styles";
 
 import { useEffect, useState } from "react";
@@ -51,7 +51,7 @@ const Favorites = ({ favHandler, favorites, deleteHandler }) => {
   }, []);
   const getNextTeam = (id) => {
     fetch(
-      `https://www.thesportsdb.com/api/v1/json/4013016/eventsnext.php?id=${id}`
+      `https://www.thesportsdb.com/api/v1/json/${key}/eventsnext.php?id=${id}`
     )
       .then((res) => res.json())
       .then((data) => {
