@@ -1,20 +1,29 @@
 import {
+  Button,
   Card,
   CardMedia,
   Grid,
   CardContent,
   Typography,
   CardActionArea,
-  makeStyles,
-} from "@material-ui/core";
+} from "@mui/material";
+import { styled } from "@mui/material/styles";
+import makeStyles from "@mui/styles/makeStyles";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-const useStyles = makeStyles({
-  root: {
+const PREFIX = "NFL";
+
+const classes = {
+  root: `${PREFIX}-root`,
+  media: `${PREFIX}-media`,
+};
+
+const Root = styled("div")({
+  [`& .${classes.root}`]: {
     maxWidth: "auto",
   },
 
-  media: {
+  [`& .${classes.media}`]: {
     margin: "auto",
     height: "auto",
     width: 200,
@@ -23,22 +32,26 @@ const useStyles = makeStyles({
 });
 
 const NFL = ({ nfl, showMe, setRoute }) => {
-  const classes = useStyles();
   return nfl === undefined ? (
-    <div></div>
+    <Root></Root>
   ) : (
     <div>
       {" "}
-      <ArrowBackIcon
-        className={classes.title}
-        fontSize="large"
-        onClick={() => setRoute("home")}
-      />{" "}
+      <Button sx={{ pa: 4 }}>
+        <ArrowBackIcon
+          fontSize="large"
+          sx={{ fontSize: 40 }}
+          onClick={() => {
+            setRoute("home");
+            console.log("click");
+          }}
+        />{" "}
+      </Button>
       <Grid
         key="ok"
         spacing={4}
         sx={{
-          display: "grid",
+          display: "flex",
           gridAutoFlow: "row",
           gridTemplateColumns: "repeat(5, 1fr)",
 

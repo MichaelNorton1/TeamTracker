@@ -1,32 +1,49 @@
 import { useState } from "react";
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
+import { styled } from '@mui/material/styles';
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
 
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import makeStyles from '@mui/styles/makeStyles';
+import Container from "@mui/material/Container";
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
+const PREFIX = 'Register';
+
+const classes = {
+  paper: `${PREFIX}-paper`,
+  avatar: `${PREFIX}-avatar`,
+  form: `${PREFIX}-form`,
+  submit: `${PREFIX}-submit`
+};
+
+const StyledContainer = styled(Container)((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.paper}`]: {
     marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
   },
-  avatar: {
+
+  [`& .${classes.avatar}`]: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
-  form: {
+
+  [`& .${classes.form}`]: {
     width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
-  submit: {
+
+  [`& .${classes.submit}`]: {
     margin: theme.spacing(3, 0, 2),
-  },
+  }
 }));
 
 function Register({ setRoute, setGuest, setUserId }) {
@@ -45,7 +62,7 @@ function Register({ setRoute, setGuest, setUserId }) {
     setName(event.target.value);
   };
 
-  const classes = useStyles();
+
 
   const register = (e) => {
     e.preventDefault();
@@ -67,7 +84,7 @@ function Register({ setRoute, setGuest, setUserId }) {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <StyledContainer component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -140,7 +157,7 @@ function Register({ setRoute, setGuest, setUserId }) {
           Sign in
         </Button>
       </div>
-    </Container>
+    </StyledContainer>
   );
 }
 export default Register;

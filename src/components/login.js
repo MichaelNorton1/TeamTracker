@@ -1,34 +1,52 @@
 import { useState } from "react";
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
+import { styled } from '@mui/material/styles';
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
 
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
 
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
-const useStyles = makeStyles((theme) => ({
-  paper: {
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import makeStyles from "@mui/styles/makeStyles";
+import Container from "@mui/material/Container";
+
+const PREFIX = 'Login';
+
+const classes = {
+  paper: `${PREFIX}-paper`,
+  avatar: `${PREFIX}-avatar`,
+  form: `${PREFIX}-form`,
+  submit: `${PREFIX}-submit`
+};
+
+const StyledContainer = styled(Container)((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.paper}`]: {
     marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
   },
-  avatar: {
+
+  [`& .${classes.avatar}`]: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
-  form: {
+
+  [`& .${classes.form}`]: {
     width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
-  submit: {
+
+  [`& .${classes.submit}`]: {
     margin: theme.spacing(3, 0, 2),
-  },
+  }
 }));
 
 function Login({ setRoute, setGuest, setUserId }) {
@@ -43,7 +61,7 @@ function Login({ setRoute, setGuest, setUserId }) {
     setPass(event.target.value);
   };
 
-  const classes = useStyles();
+
   const guestLogIn = (e) => {
     console.log("click");
     setGuest(true);
@@ -67,7 +85,7 @@ function Login({ setRoute, setGuest, setUserId }) {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <StyledContainer component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -137,7 +155,7 @@ function Login({ setRoute, setGuest, setUserId }) {
           Sign in as guest
         </Button>
       </div>
-    </Container>
+    </StyledContainer>
   );
 }
 export default Login;

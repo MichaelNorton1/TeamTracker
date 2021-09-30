@@ -5,19 +5,28 @@ import {
   CardContent,
   Typography,
   CardActionArea,
-  makeStyles,
-} from "@material-ui/core";
+} from "@mui/material";
+
+import { styled } from "@mui/material/styles";
+
+import makeStyles from "@mui/styles/makeStyles";
 
 import AddIcon from "@mui/icons-material/Add";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useEffect, useState } from "react";
-const useStyles = makeStyles({
-  media: { height: "100%", width: 275, margin: "auto" },
-  title: { display: "flex" },
+const PREFIX = "SingleTeam";
+
+const classes = {
+  media: `${PREFIX}-media`,
+  title: `${PREFIX}-title`,
+};
+
+const Root = styled("div")({
+  [`& .${classes.media}`]: { height: "100%", width: 275, margin: "auto" },
+  [`& .${classes.title}`]: { display: "flex" },
 });
 
 const SingleTeam = ({ filtered, setRoute, favHandler, favorites }) => {
-  const classes = useStyles();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -45,27 +54,27 @@ const SingleTeam = ({ filtered, setRoute, favHandler, favorites }) => {
   });
 
   return (
-    <div>
+    <Root>
       {" "}
-      <Button
-        disabled={dis}
-        name={filtered[0]}
-        onClick={() => {
-          func();
-        }}
-        color="primary"
-        variant="contained"
-        startIcon={<AddIcon />}
-      >
-        {buttonText}
-      </Button>
+      <ArrowBackIcon
+        className={classes.title}
+        fontSize="large"
+        onClick={() => setRoute(filtered[0].idLeague)}
+      />
       <Card name={filtered[0].strTeam} value={filtered[0].strTeam}>
         <CardActionArea>
-          <ArrowBackIcon
-            className={classes.title}
-            fontSize="large"
-            onClick={() => setRoute(filtered[0].idLeague)}
-          />
+          <Button
+            disabled={dis}
+            name={filtered[0]}
+            onClick={() => {
+              func();
+            }}
+            color="primary"
+            variant="contained"
+            startIcon={<AddIcon />}
+          >
+            {buttonText}
+          </Button>
 
           <CardMedia
             cursor="pointer"
@@ -87,7 +96,7 @@ const SingleTeam = ({ filtered, setRoute, favHandler, favorites }) => {
           </CardContent>
         </CardActionArea>
       </Card>
-    </div>
+    </Root>
   );
 };
 export default SingleTeam;

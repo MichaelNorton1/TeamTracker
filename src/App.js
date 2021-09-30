@@ -10,9 +10,22 @@ import Favorites from "../src/components/favorites";
 import Login from "../src/components/login";
 import Register from "../src/components/register";
 import Leagues from "./components/leagues";
+import {
+  ThemeProvider,
+  createTheme,
+  makeStyles,
+} from "@material-ui/core/styles";
 
+const theme = createTheme();
+
+const useStyles = makeStyles((theme) => {
+  root: {
+    //
+  }
+});
 // favorites bug ===== only saves favorites when in favorites tab
 function App() {
+  const classes = useStyles();
   const [userId, setUserId] = useState();
   const [guest, setGuest] = useState(false);
   const [team, setTeam] = useState(undefined);
@@ -51,7 +64,7 @@ function App() {
         .catch((err) => console.log(err));
     }
   }, [userId]);
-  console.log(guest);
+
   const all = [
     {
       league: "NFL",
@@ -68,7 +81,6 @@ function App() {
   ];
 
   const showMe = (e) => {
-    console.log("click");
     if (e !== undefined && e.target.name.length > 0) {
       setTeam(e.target.name);
       setRoute("single");
@@ -144,36 +156,40 @@ function App() {
   //need to make a register page and backed list to push to
   return (
     <div className="">
-      <Nav logOut={logOut} route={route} setRoute={setRoute}></Nav>
-      {route === "home" ? ( //NFL OR EPL on click change route, show full league
-        <Leagues all={all} setRoute={setRoute}></Leagues>
-      ) : route === "4391" ? (
-        <NFL nfl={nfl} setRoute={setRoute} showMe={showMe}></NFL>
-      ) : route === "4328" ? (
-        <EPL epl={epl} setRoute={setRoute} showMe={showMe}></EPL>
-      ) : route === "favorites" ? (
-        <Favorites
-          favHandler={favHandler}
-          guest={guest}
-          favorites={favorites}
-          deleteHandler={deleteHandler}
-        ></Favorites>
-      ) : route === "single" ? (
-        <SingleTeam
-          filtered={filtered}
-          favorites={favorites}
-          favHandler={favHandler}
-          setRoute={setRoute}
-        ></SingleTeam>
-      ) : route === "register" ? (
-        <Register setUserId={setUserId} setRoute={setRoute}></Register>
-      ) : (
-        <Login
-          setUserId={setUserId}
-          setGuest={setGuest}
-          setRoute={setRoute}
-        ></Login>
-      )}
+      <ThemeProvider theme={theme}>
+        {" "}
+        <Nav logOut={logOut} route={route} setRoute={setRoute}></Nav>
+        {route === "home" ? ( //NFL OR EPL on click change route, show full league
+          <Leagues all={all} setRoute={setRoute}></Leagues>
+        ) : route === "4391" ? (
+          <NFL nfl={nfl} setRoute={setRoute} showMe={showMe}></NFL>
+        ) : route === "4328" ? (
+          <EPL epl={epl} setRoute={setRoute} showMe={showMe}></EPL>
+        ) : route === "favorites" ? (
+          <Favorites
+            favHandler={favHandler}
+            guest={guest}
+            favorites={favorites}
+            deleteHandler={deleteHandler}
+          ></Favorites>
+        ) : route === "single" ? (
+          <SingleTeam
+            filtered={filtered}
+            favorites={favorites}
+            favHandler={favHandler}
+            setRoute={setRoute}
+          ></SingleTeam>
+        ) : route === "register" ? (
+          <Register setUserId={setUserId} setRoute={setRoute}></Register>
+        ) : (
+          <Login
+            theme={theme}
+            setUserId={setUserId}
+            setGuest={setGuest}
+            setRoute={setRoute}
+          ></Login>
+        )}
+      </ThemeProvider>
     </div>
   );
 }

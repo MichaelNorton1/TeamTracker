@@ -5,32 +5,39 @@ import {
   CardContent,
   Typography,
   CardActionArea,
-  makeStyles,
-} from "@material-ui/core";
+} from "@mui/material";
 
-const useStyles = makeStyles({
-  root: {
+import { styled } from "@mui/material/styles";
+
+const PREFIX = "Leagues";
+
+const classes = {
+  root: `${PREFIX}-root`,
+  media: `${PREFIX}-media`,
+};
+
+const StyledGrid = styled(Grid)({
+  [`&.${classes.root}`]: {
     maxWidth: "auto",
   },
 
-  media: {
+  [`& .${classes.media}`]: {
     margin: "auto",
     height: "auto",
-    width: 200,
+    width: "30",
     padding: "10%",
   },
 });
 
 const Leagues = ({ all, setRoute }) => {
-  const classes = useStyles();
   return all === undefined ? (
     <div></div>
   ) : (
-    <Grid
+    <StyledGrid
       key="ok"
       spacing={4}
       sx={{
-        display: "grid",
+        display: "flex",
         gridAutoFlow: "row",
         gridTemplateColumns: "repeat(5, 1fr)",
 
@@ -70,7 +77,7 @@ const Leagues = ({ all, setRoute }) => {
           </Card>
         </Grid>
       ))}
-    </Grid>
+    </StyledGrid>
   );
 };
 export default Leagues;
