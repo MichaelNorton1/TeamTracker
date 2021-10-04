@@ -8,7 +8,7 @@ import {
   CardActionArea,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import makeStyles from "@mui/styles/makeStyles";
+
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const PREFIX = "NFL";
@@ -33,64 +33,66 @@ const Root = styled("div")({
 
 const NFL = ({ nfl, showMe, setRoute }) => {
   return nfl === undefined ? (
-    <Root></Root>
+    <div></div>
   ) : (
-    <div>
-      {" "}
-      <Button sx={{ pa: 4 }}>
-        <ArrowBackIcon
-          fontSize="large"
-          sx={{ fontSize: 40 }}
-          onClick={() => {
-            setRoute("home");
-            console.log("click");
-          }}
-        />{" "}
-      </Button>
-      <Grid
-        key="ok"
-        spacing={4}
-        sx={{
-          display: "flex",
-          gridAutoFlow: "row",
-          gridTemplateColumns: "repeat(5, 1fr)",
-
-          gap: 4,
-        }}
-        container
-        className={classes.root}
-        cols={1}
-      >
+    <Root>
+      <div>
         {" "}
-        {nfl.map((team) => (
-          <Grid key={team.strTeam} item xs>
-            {" "}
-            <Card name={team.strTeam} onClick={showMe} value={team.strTeam}>
-              <CardActionArea>
-                <CardMedia
-                  cursor="pointer"
-                  name={team.strTeam}
-                  className={classes.media}
-                  component="img"
-                  image={team.strTeamBadge}
-                />
-                <CardContent name={team.strTeam}>
-                  <Typography
+        <Button sx={{ pa: 4 }}>
+          <ArrowBackIcon
+            fontSize="large"
+            sx={{ fontSize: 40 }}
+            onClick={() => {
+              setRoute("home");
+              console.log("click");
+            }}
+          />{" "}
+        </Button>
+        <Grid
+          key="ok"
+          spacing={4}
+          sx={{
+            display: "flex",
+            gridAutoFlow: "row",
+            gridTemplateColumns: "repeat(5, 1fr)",
+
+            gap: 4,
+          }}
+          container
+          className={classes.root}
+          cols={1}
+        >
+          {" "}
+          {nfl.map((team) => (
+            <Grid key={team.strTeam} item xs>
+              {" "}
+              <Card name={team.strTeam} onClick={showMe} value={team.strTeam}>
+                <CardActionArea>
+                  <CardMedia
+                    cursor="pointer"
                     name={team.strTeam}
-                    align="center"
-                    variant="h6"
-                    color="textPrimary"
-                    component="p"
-                  >
-                    {team.strTeam}
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
-    </div>
+                    className={classes.media}
+                    component="img"
+                    image={team.strTeamBadge}
+                  />
+                  <CardContent name={team.strTeam}>
+                    <Typography
+                      name={team.strTeam}
+                      align="center"
+                      variant="h6"
+                      color="textPrimary"
+                      component="p"
+                    >
+                      {team.strTeam}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </div>
+    </Root>
   );
 };
 export default NFL;

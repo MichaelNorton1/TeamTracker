@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { styled } from '@mui/material/styles';
+import { styled } from "@mui/material/styles";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -7,23 +7,19 @@ import TextField from "@mui/material/TextField";
 
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import makeStyles from '@mui/styles/makeStyles';
+
 import Container from "@mui/material/Container";
 
-const PREFIX = 'Register';
+const PREFIX = "Register";
 
 const classes = {
   paper: `${PREFIX}-paper`,
   avatar: `${PREFIX}-avatar`,
   form: `${PREFIX}-form`,
-  submit: `${PREFIX}-submit`
+  submit: `${PREFIX}-submit`,
 };
 
-const StyledContainer = styled(Container)((
-  {
-    theme
-  }
-) => ({
+const StyledContainer = styled(Container)(({ theme }) => ({
   [`& .${classes.paper}`]: {
     marginTop: theme.spacing(8),
     display: "flex",
@@ -43,7 +39,7 @@ const StyledContainer = styled(Container)((
 
   [`& .${classes.submit}`]: {
     margin: theme.spacing(3, 0, 2),
-  }
+  },
 }));
 
 function Register({ setRoute, setGuest, setUserId }) {
@@ -62,12 +58,13 @@ function Register({ setRoute, setGuest, setUserId }) {
     setName(event.target.value);
   };
 
-
-
   const register = (e) => {
     e.preventDefault();
+    if (!pass || !signEmail || !name) {
+      return console.log("incorrect");
+    }
     const stuff = { email: signEmail, password: pass, name: name };
-    fetch("http://localhost:3001/register", {
+    fetch("https://leagueteamtracker.herokuapp.com/register", {
       method: "post",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify(stuff),
@@ -75,7 +72,7 @@ function Register({ setRoute, setGuest, setUserId }) {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        if (data) {
+        if (data.userId) {
           setRoute("home");
           setUserId(data);
         }

@@ -9,8 +9,6 @@ import {
 
 import { styled } from "@mui/material/styles";
 
-import makeStyles from "@mui/styles/makeStyles";
-
 import AddIcon from "@mui/icons-material/Add";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useEffect, useState } from "react";
@@ -56,26 +54,30 @@ const SingleTeam = ({ filtered, setRoute, favHandler, favorites }) => {
   return (
     <Root>
       {" "}
-      <ArrowBackIcon
-        className={classes.title}
-        fontSize="large"
-        onClick={() => setRoute(filtered[0].idLeague)}
-      />
+      <div>
+        {" "}
+        <Button>
+          <ArrowBackIcon
+            className={classes.title}
+            fontSize="large"
+            onClick={() => setRoute(filtered[0].idLeague)}
+          ></ArrowBackIcon>
+        </Button>
+      </div>
       <Card name={filtered[0].strTeam} value={filtered[0].strTeam}>
+        <Button
+          disabled={dis}
+          name={filtered[0]}
+          onClick={() => {
+            func();
+          }}
+          color="primary"
+          variant="contained"
+          startIcon={<AddIcon />}
+        >
+          {buttonText}
+        </Button>
         <CardActionArea>
-          <Button
-            disabled={dis}
-            name={filtered[0]}
-            onClick={() => {
-              func();
-            }}
-            color="primary"
-            variant="contained"
-            startIcon={<AddIcon />}
-          >
-            {buttonText}
-          </Button>
-
           <CardMedia
             cursor="pointer"
             name={filtered[0].strTeam}

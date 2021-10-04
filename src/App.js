@@ -17,15 +17,10 @@ import {
 } from "@material-ui/core/styles";
 
 const theme = createTheme();
-
-const useStyles = makeStyles((theme) => {
-  root: {
-    //
-  }
-});
+// eslint-disable-next-line
+const useStyles = makeStyles((theme) => {});
 // favorites bug ===== only saves favorites when in favorites tab
 function App() {
-  const classes = useStyles();
   const [userId, setUserId] = useState();
   const [guest, setGuest] = useState(false);
   const [team, setTeam] = useState(undefined);
@@ -33,37 +28,43 @@ function App() {
 
   const [route, setRoute] = useState("signIn"); // routes: signIn,favorites
   // const [signedIn, setSignedIn] = useState(false); //route
-  const [favorites, setFavorites] = useState(favs);
+  const [favorites, setFavorites] = useState([]);
   const [epl, setEpl] = useState([]);
   const [nfl, setNFL] = useState([]);
   //route
-
-  useEffect(() => {
-    //API Call inside of useEffect so it is only called once
-    fetch(
-      "https://www.thesportsdb.com/api/v1/json/1/search_all_teams.php?l=English%20Premier%20League"
-    )
-      .then((res) => res.json())
-      .then((data) => setEpl(data.teams));
-
-    fetch(
-      "https://www.thesportsdb.com/api/v1/json/1/search_all_teams.php?l=NFL"
-    )
-      .then((res) => res.json())
-      .then((data) => setNFL(data.teams));
-    if (guest === false) {
-      fetch("http://localhost:3001/favorites/id", {
-        method: "post",
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify({ id: userId }),
-      })
+  console.log(favorites);
+  useEffect(
+    () => {
+      //API Call inside of useEffect so it is only called once
+      fetch(
+        "https://www.thesportsdb.com/api/v1/json/1/search_all_teams.php?l=English%20Premier%20League"
+      )
         .then((res) => res.json())
-        .then((data) => {
-          setFavorites(data);
-        })
+        .then((data) => setEpl(data.teams));
+
+      fetch(
+        "https://www.thesportsdb.com/api/v1/json/1/search_all_teams.php?l=NFL"
+      )
+        .then((res) => res.json())
+        .then((data) => setNFL(data.teams))
         .catch((err) => console.log(err));
-    }
-  }, [userId]);
+      if (guest === false) {
+        fetch("https://leagueteamtracker.herokuapp.com/favorites/id", {
+          method: "post",
+          headers: { "Content-type": "application/json" },
+          body: JSON.stringify({ id: userId }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            setFavorites(data);
+          })
+          .catch((err) => console.log(err));
+      }
+    },
+
+    // eslint-disable-next-line
+    [userId]
+  );
 
   const all = [
     {
@@ -99,6 +100,7 @@ function App() {
         const obj = epl.filter((x) => x.strTeam === team);
         const foot = nfl.filter((x) => x.strTeam === team);
         if (dupl.length > 0) {
+          console.log(dupl);
           return [...prev];
         } else {
           return [...foot, ...obj, ...prev];
@@ -121,7 +123,7 @@ function App() {
         };
       });
 
-      fetch("http://localhost:3001/favorites", {
+      fetch("https://leagueteamtracker.herokuapp.com/favorites", {
         method: "post",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(stuff),
@@ -132,14 +134,15 @@ function App() {
     setGuest(false);
     setRoute("signIn");
     setUserId();
-    setFavorites(favs);
+    setFavorites([]);
+    window.location.reload();
   };
 
   const deleteHandler = (team) => {
     if (guest === false) {
       const final = { team: team, id: userId };
       const check = favorites.filter((delteam) => delteam.strTeam !== team);
-      fetch("http://localhost:3001/favorites", {
+      fetch("https://leagueteamtracker.herokuapp.com/favorites", {
         method: "delete",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(final),

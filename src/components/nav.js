@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { styled } from '@mui/material/styles';
+import { styled } from "@mui/material/styles";
 import clsx from "clsx";
 import { useTheme } from "@mui/material/styles";
-import makeStyles from '@mui/styles/makeStyles';
+
 import Drawer from "@mui/material/Drawer";
 import CssBaseline from "@mui/material/CssBaseline";
 import AppBar from "@mui/material/AppBar";
@@ -20,7 +20,7 @@ import ListItemText from "@mui/material/ListItemText";
 
 import { Button, Box } from "@mui/material";
 
-const PREFIX = 'nav';
+const PREFIX = "nav";
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -33,14 +33,10 @@ const classes = {
   drawerHeader: `${PREFIX}-drawerHeader`,
   content: `${PREFIX}-content`,
   contentShift: `${PREFIX}-contentShift`,
-  title: `${PREFIX}-title`
+  title: `${PREFIX}-title`,
 };
 
-const Root = styled('div')((
-  {
-    theme
-  }
-) => ({
+const Root = styled("div")(({ theme }) => ({
   [`&.${classes.root}`]: {
     display: "flex",
   },
@@ -105,13 +101,12 @@ const Root = styled('div')((
     marginLeft: 0,
   },
 
-  [`& .${classes.title}`]: { flexGrow: 1 }
+  [`& .${classes.title}`]: { flexGrow: 1 },
 }));
 
 const drawerWidth = 240;
 
 export default function Nav({ logOut, route, setRoute }) {
-
   const theme = useTheme();
   const [open, setOpen] = useState(false);
 
@@ -142,7 +137,8 @@ export default function Nav({ logOut, route, setRoute }) {
               onClick={handleDrawerOpen}
               edge="start"
               className={clsx(classes.menuButton, open && classes.hide)}
-              size="large">
+              size="large"
+            >
               <MenuIcon />
             </IconButton>
             <Typography className={classes.title} variant="h6" noWrap>

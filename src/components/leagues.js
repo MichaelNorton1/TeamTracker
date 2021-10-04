@@ -24,8 +24,8 @@ const StyledGrid = styled(Grid)({
   [`& .${classes.media}`]: {
     margin: "auto",
     height: "auto",
-    width: "30",
-    padding: "10%",
+    width: 200,
+    padding: 10,
   },
 });
 
@@ -48,8 +48,9 @@ const Leagues = ({ all, setRoute }) => {
       cols={1}
     >
       {all.map((team) => (
-        <Grid key={team.strTeam} item xs>
+        <Grid key={team.leagueId} item xs>
           <Card
+            key={team.strTeam}
             name={team.strTeam}
             onClick={() => setRoute(team.leagueId)}
             value={team.strTeam}

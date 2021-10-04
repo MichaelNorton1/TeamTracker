@@ -8,7 +8,7 @@ import {
   ListItem,
   Typography,
 } from "@mui/material";
-import key from "./config.js";
+
 import { styled } from "@mui/material/styles";
 
 import { useEffect, useState } from "react";
@@ -46,22 +46,30 @@ const Favorites = ({ favHandler, favorites, deleteHandler }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  useEffect(() => {
-    favHandler();
-  }, []);
+
+  useEffect(
+    () => {
+      favHandler();
+    }, // eslint-disable-next-line
+    []
+  );
+  //make an async function that awaits the pictures
   const getNextTeam = (id) => {
-    fetch(
-      `https://www.thesportsdb.com/api/v1/json/${key}/eventsnext.php?id=${id}`
-    )
+    fetch("https://leagueteamtracker.herokuapp.com/favorites/next", {
+      method: "post",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify({ id }),
+    })
       .then((res) => res.json())
       .then((data) => {
         setDescription({
-          event: data.events[0].strEvent,
-          date: data.events[0].dateEventLocal,
+          event: data.event,
+          date: data.date,
         });
-        setPhoto(data.events[0].strThumb);
+        setPhoto(data.pic);
       })
-      .then(() => handleOpen());
+      .then(() => handleOpen())
+      .catch((err) => console.log(err));
   };
 
   return (

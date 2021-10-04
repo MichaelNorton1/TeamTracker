@@ -1,7 +1,7 @@
 import { styled } from "@material-ui/core";
-import { BorderColor } from "@material-ui/icons";
+
 import { Box, Card, CardMedia, Modal, Typography } from "@mui/material";
-import useMediaQuery from "@mui/material/useMediaQuery";
+
 const NextTeam = ({ nextGamePhoto, open, handleClose, description }) => {
   const Root = styled("div")(({ theme }) => ({
     position: "absolute",
@@ -24,7 +24,14 @@ const NextTeam = ({ nextGamePhoto, open, handleClose, description }) => {
           <Box sx={{}}>
             <Card>
               <CardMedia component="img" image={nextGamePhoto}></CardMedia>
-              <Typography>{description.event}</Typography>
+              <Typography
+                style={{ backgroundColor: "black" }}
+                variant="h6"
+                align="center"
+                color="white"
+              >
+                {description.event}
+              </Typography>
             </Card>
           </Box>
         </Root>
