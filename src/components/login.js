@@ -76,7 +76,8 @@ function Login({ setRoute, setGuest, setUserId }) {
           setRoute("home");
           setUserId(data.userid);
         }
-      });
+      })
+      .catch((err) => console.log(err));
   };
 
   return (

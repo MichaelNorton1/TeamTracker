@@ -71,10 +71,9 @@ function Register({ setRoute, setGuest, setUserId }) {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
-        if (data.userId) {
+        if (data.userid) {
           setRoute("home");
-          setUserId(data);
+          setUserId(data.userid);
         }
       })
       .catch((err) => console.log(err));

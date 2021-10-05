@@ -32,7 +32,7 @@ function App() {
   const [epl, setEpl] = useState([]);
   const [nfl, setNFL] = useState([]);
   //route
-  console.log(favorites);
+
   useEffect(
     () => {
       //API Call inside of useEffect so it is only called once
@@ -48,6 +48,7 @@ function App() {
         .then((res) => res.json())
         .then((data) => setNFL(data.teams))
         .catch((err) => console.log(err));
+
       if (guest === false) {
         fetch("https://leagueteamtracker.herokuapp.com/favorites/id", {
           method: "post",
@@ -80,7 +81,7 @@ function App() {
       leagueId: "4328",
     },
   ];
-
+  console.log(favorites, userId, guest, route);
   const showMe = (e) => {
     if (e !== undefined && e.target.name.length > 0) {
       setTeam(e.target.name);
@@ -101,11 +102,15 @@ function App() {
         const foot = nfl.filter((x) => x.strTeam === team);
         if (dupl.length > 0) {
           console.log(dupl);
+          console.log("first");
+          console.log(dupl);
           return [...prev];
-        } else {
+        } else if (dupl.length === 0) {
+          console.log("second");
           return [...foot, ...obj, ...prev];
         }
       } else if (favorites === undefined && guest === false) {
+        console.log("third");
         return [...prev];
       }
     });
@@ -119,10 +124,10 @@ function App() {
           id: userId,
           strTeam: name,
           idTeam: ids[id],
-          strTeamBadge: images[id].toString(),
+          strTeamBadge: images[id],
         };
       });
-
+      console.log(stuff);
       fetch("https://leagueteamtracker.herokuapp.com/favorites", {
         method: "post",
         headers: { "Content-type": "application/json" },
@@ -141,6 +146,7 @@ function App() {
   const deleteHandler = (team) => {
     if (guest === false) {
       const final = { team: team, id: userId };
+      console.log(final);
       const check = favorites.filter((delteam) => delteam.strTeam !== team);
       fetch("https://leagueteamtracker.herokuapp.com/favorites", {
         method: "delete",

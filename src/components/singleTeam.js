@@ -43,6 +43,7 @@ const SingleTeam = ({ filtered, setRoute, favHandler, favorites }) => {
       favorites[0] !== undefined &&
       dis === false
     ) {
+      // here is the bug
       return favorites.map((team) =>
         team.strTeam === filtered[0].strTeam
           ? func()

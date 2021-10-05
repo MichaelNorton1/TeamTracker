@@ -54,14 +54,18 @@ const Favorites = ({ favHandler, favorites, deleteHandler }) => {
     []
   );
   //make an async function that awaits the pictures
-  const getNextTeam = (id) => {
+  const getNextTeam = (teamid) => {
     fetch("https://leagueteamtracker.herokuapp.com/favorites/next", {
       method: "post",
       headers: { "Content-type": "application/json" },
-      body: JSON.stringify({ id }),
+      body: JSON.stringify({ id: teamid }),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        res.json();
+      })
       .then((data) => {
+        console.log(data);
         setDescription({
           event: data.event,
           date: data.date,
@@ -78,18 +82,18 @@ const Favorites = ({ favHandler, favorites, deleteHandler }) => {
         <div>Add teams to Favorites!</div>
       ) : (
         favorites.map((team) => (
-          <Grid key={team.strTeam}>
+          <Grid key={team.strteam}>
             <Card className={classes.title} key={team}>
               <CardActionArea>
                 {" "}
                 <CardMedia
                   cursor="pointer"
-                  name={team.strTeam}
+                  name={team.strteam}
                   className={classes.media}
                   component="img"
-                  image={team.strTeamBadge}
+                  image={team.strteambadge}
                 ></CardMedia>
-                <Typography align="center">{team.strTeam}</Typography>
+                <Typography align="center">{team.strteam}</Typography>
               </CardActionArea>{" "}
               <List>
                 <ListItem>
@@ -100,7 +104,7 @@ const Favorites = ({ favHandler, favorites, deleteHandler }) => {
                     nextGamePhoto={nextGamePhoto}
                   ></NextTeam>
                   <Button
-                    onClick={() => getNextTeam(team.idTeam)}
+                    onClick={() => getNextTeam(team.idteam)}
                     variant="outlined"
                     align="right"
                   >
@@ -115,7 +119,7 @@ const Favorites = ({ favHandler, favorites, deleteHandler }) => {
                 <ListItem>
                   <Button
                     onClick={() => {
-                      deleteHandler(team.strTeam);
+                      deleteHandler(team.strteam);
                     }}
                     align="right"
                     variant="outlined"
