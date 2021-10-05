@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/TeamTracker/static/css/main.a617e044.chunk.css",
-    "main.js": "/TeamTracker/static/js/main.93174d73.chunk.js",
-    "main.js.map": "/TeamTracker/static/js/main.93174d73.chunk.js.map",
+    "main.js": "/TeamTracker/static/js/main.7029b10e.chunk.js",
+    "main.js.map": "/TeamTracker/static/js/main.7029b10e.chunk.js.map",
     "runtime-main.js": "/TeamTracker/static/js/runtime-main.7b102b4a.js",
     "runtime-main.js.map": "/TeamTracker/static/js/runtime-main.7b102b4a.js.map",
     "static/js/2.5e9204b0.chunk.js": "/TeamTracker/static/js/2.5e9204b0.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.7b102b4a.js",
     "static/js/2.5e9204b0.chunk.js",
     "static/css/main.a617e044.chunk.css",
-    "static/js/main.93174d73.chunk.js"
+    "static/js/main.7029b10e.chunk.js"
   ]
 }
