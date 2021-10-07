@@ -63,7 +63,8 @@ function Register({ setRoute, setUserId }) {
     if (!pass || !signEmail || !name) {
       return alert("Entries are not valid");
     }
-    const stuff = { email: signEmail, password: pass, name: name };
+    const lower = signEmail.toLowerCase();
+    const stuff = { email: lower, password: pass, name: name };
     fetch("https://leagueteamtracker.herokuapp.com/register", {
       method: "post",
       headers: { "Content-type": "application/json" },
