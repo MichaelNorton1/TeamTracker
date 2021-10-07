@@ -107,10 +107,10 @@ function App() {
     //filtering out teams that have already been added to favorites list
     setFavorites((prev) => {
       const dupl = prev.filter((x) => x.strteam === single);
-      const obj = epl.filter((x) => x.strteam === single);
+      const soccer = epl.filter((x) => x.strteam === single);
       const foot = nfl.filter((x) => x.strteam === single);
       if (dupl.length === 0) {
-        return [...obj, ...foot, ...prev];
+        return [...soccer, ...foot, ...prev];
       } else {
         return [...prev];
       }
@@ -202,7 +202,6 @@ function App() {
         ) : route === "single" ? (
           <SingleTeam
             filtered={filtered}
-            favorites={favorites}
             favHandler={favHandler}
             setRoute={setRoute}
           ></SingleTeam>

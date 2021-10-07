@@ -42,7 +42,7 @@ const StyledContainer = styled(Container)(({ theme }) => ({
   },
 }));
 
-function Register({ setRoute, setGuest, setUserId }) {
+function Register({ setRoute, setUserId }) {
   const [signEmail, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [name, setName] = useState("");
