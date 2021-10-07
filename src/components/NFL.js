@@ -31,7 +31,11 @@ const Root = styled("div")({
   },
 });
 
-const NFL = ({ nfl, showMe, setRoute }) => {
+const NFL = ({ nfl, showMe, setRoute, setTeam }) => {
+  const teamHandler = (e) => {
+    setTeam(e);
+    showMe();
+  };
   return nfl === undefined ? (
     <div></div>
   ) : (
@@ -44,7 +48,6 @@ const NFL = ({ nfl, showMe, setRoute }) => {
             sx={{ fontSize: 40 }}
             onClick={() => {
               setRoute("home");
-              console.log("click");
             }}
           />{" "}
         </Button>
@@ -64,26 +67,30 @@ const NFL = ({ nfl, showMe, setRoute }) => {
         >
           {" "}
           {nfl.map((team) => (
-            <Grid key={team.strTeam} item xs>
+            <Grid key={team.strteam} item xs>
               {" "}
-              <Card name={team.strTeam} onClick={showMe} value={team.strTeam}>
+              <Card
+                name={team.strteam}
+                onClick={() => teamHandler(team.strteam)}
+                value={team.strteam}
+              >
                 <CardActionArea>
                   <CardMedia
                     cursor="pointer"
-                    name={team.strTeam}
+                    name={team.strteam}
                     className={classes.media}
                     component="img"
-                    image={team.strTeamBadge}
+                    image={team.strteambadge}
                   />
-                  <CardContent name={team.strTeam}>
+                  <CardContent name={team.strteam}>
                     <Typography
-                      name={team.strTeam}
+                      name={team.strteam}
                       align="center"
                       variant="h6"
                       color="textPrimary"
                       component="p"
                     >
-                      {team.strTeam}
+                      {team.strteam}
                     </Typography>
                   </CardContent>
                 </CardActionArea>

@@ -40,7 +40,7 @@ const StyledGrid = styled(Grid)({
   },
 });
 
-const Favorites = ({ favHandler, favorites, deleteHandler }) => {
+const Favorites = ({ sendFavs, favorites, deleteHandler }) => {
   const [nextGamePhoto, setPhoto] = useState("");
   const [description, setDescription] = useState("");
   const [open, setOpen] = useState(false);
@@ -49,7 +49,7 @@ const Favorites = ({ favHandler, favorites, deleteHandler }) => {
 
   useEffect(
     () => {
-      favHandler();
+      sendFavs();
     }, // eslint-disable-next-line
     []
   );
@@ -60,12 +60,8 @@ const Favorites = ({ favHandler, favorites, deleteHandler }) => {
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({ id: teamid }),
     })
-      .then((res) => {
-        console.log(res);
-        res.json();
-      })
+      .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setDescription({
           event: data.event,
           date: data.date,

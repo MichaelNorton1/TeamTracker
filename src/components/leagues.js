@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 
 import { styled } from "@mui/material/styles";
+import { useEffect } from "react";
 
 const PREFIX = "Leagues";
 
@@ -29,7 +30,10 @@ const StyledGrid = styled(Grid)({
   },
 });
 
-const Leagues = ({ all, setRoute }) => {
+const Leagues = ({ all, setRoute, sendFavs }) => {
+  useEffect(() => {
+    sendFavs();
+  }, []);
   return all === undefined ? (
     <div></div>
   ) : (

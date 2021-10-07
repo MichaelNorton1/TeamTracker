@@ -58,12 +58,14 @@ function Login({ setRoute, setGuest, setUserId }) {
   };
 
   const guestLogIn = (e) => {
-    console.log("click");
     setGuest(true);
     setRoute("home");
   };
   const userLogIn = (e) => {
     e.preventDefault();
+    if (!pass || !signEmail) {
+      return alert("Please enter correct information");
+    }
     const stuff = { email: signEmail, password: pass };
     fetch("https://leagueteamtracker.herokuapp.com/signin", {
       method: "post",
@@ -77,7 +79,9 @@ function Login({ setRoute, setGuest, setUserId }) {
           setUserId(data.userid);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (

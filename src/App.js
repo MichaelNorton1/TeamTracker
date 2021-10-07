@@ -24,7 +24,6 @@ function App() {
   const [userId, setUserId] = useState();
   const [guest, setGuest] = useState(false);
   const [team, setTeam] = useState(undefined);
-  const favs = [];
 
   const [route, setRoute] = useState("signIn"); // routes: signIn,favorites
   // const [signedIn, setSignedIn] = useState(false); //route
@@ -40,16 +39,25 @@ function App() {
         "https://www.thesportsdb.com/api/v1/json/1/search_all_teams.php?l=English%20Premier%20League"
       )
         .then((res) => res.json())
-        .then((data) => setEpl(data.teams));
+        .then((data) => {
+          const epl = JSON.stringify(data);
+          const final = JSON.parse(epl.toLowerCase());
+
+          setEpl(final.teams);
+        });
 
       fetch(
         "https://www.thesportsdb.com/api/v1/json/1/search_all_teams.php?l=NFL"
       )
         .then((res) => res.json())
-        .then((data) => setNFL(data.teams))
+        .then((data) => {
+          const nfl = JSON.stringify(data);
+          const final = JSON.parse(nfl.toLowerCase());
+          setNFL(final.teams);
+        })
         .catch((err) => console.log(err));
 
-      if (guest === false) {
+      if (guest === false && route === "home") {
         fetch("https://leagueteamtracker.herokuapp.com/favorites/id", {
           method: "post",
           headers: { "Content-type": "application/json" },
@@ -57,7 +65,11 @@ function App() {
         })
           .then((res) => res.json())
           .then((data) => {
-            setFavorites(data);
+            if (data === undefined) {
+              setFavorites([]);
+            } else {
+              setFavorites(data);
+            }
           })
           .catch((err) => console.log(err));
       }
@@ -81,43 +93,34 @@ function App() {
       leagueId: "4328",
     },
   ];
-  console.log(favorites, userId, guest, route);
-  const showMe = (e) => {
-    if (e !== undefined && e.target.name.length > 0) {
-      setTeam(e.target.name);
+  const leagues = [...epl, ...nfl];
+  const filtered = leagues.filter((x) => x.strteam === team);
+  const showMe = () => {
+    if (filtered.length > 0) {
       setRoute("single");
-    } else {
-      setTeam(undefined);
     }
   };
-  const leagues = [...epl, ...nfl];
-  const filtered = leagues.filter((x) => x.strTeam === team); // showing only the single team
 
-  const favHandler = (e) => {
+  // showing only the single team
+
+  const favHandler = (single) => {
     //filtering out teams that have already been added to favorites list
     setFavorites((prev) => {
-      if (prev !== undefined) {
-        const dupl = favorites.filter((x) => x.strTeam === team);
-        const obj = epl.filter((x) => x.strTeam === team);
-        const foot = nfl.filter((x) => x.strTeam === team);
-        if (dupl.length > 0) {
-          console.log(dupl);
-          console.log("first");
-          console.log(dupl);
-          return [...prev];
-        } else if (dupl.length === 0) {
-          console.log("second");
-          return [...foot, ...obj, ...prev];
-        }
-      } else if (favorites === undefined && guest === false) {
-        console.log("third");
+      const dupl = prev.filter((x) => x.strteam === single);
+      const obj = epl.filter((x) => x.strteam === single);
+      const foot = nfl.filter((x) => x.strteam === single);
+      if (dupl.length === 0) {
+        return [...obj, ...foot, ...prev];
+      } else {
         return [...prev];
       }
     });
-    if (favorites !== undefined && favorites.length > 0 && guest === false) {
-      const ids = favorites.map((team) => team.idTeam);
-      const names = favorites.map((team) => team.strTeam);
-      const images = favorites.map((team) => team.strTeamBadge);
+  };
+  const sendFavs = () => {
+    if (guest === false) {
+      const ids = favorites.map((team) => team.idteam);
+      const names = favorites.map((team) => team.strteam);
+      const images = favorites.map((team) => team.strteambadge);
 
       const stuff = names.map((name, id) => {
         return {
@@ -127,14 +130,18 @@ function App() {
           strTeamBadge: images[id],
         };
       });
-      console.log(stuff);
+
       fetch("https://leagueteamtracker.herokuapp.com/favorites", {
         method: "post",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(stuff),
-      });
+      })
+        .then((res) => res.json())
+        .then((data) => data)
+        .catch((er) => er, "ERROR");
     }
   };
+
   const logOut = () => {
     setGuest(false);
     setRoute("signIn");
@@ -146,18 +153,18 @@ function App() {
   const deleteHandler = (team) => {
     if (guest === false) {
       const final = { team: team, id: userId };
-      console.log(final);
-      const check = favorites.filter((delteam) => delteam.strTeam !== team);
+
+      const check = favorites.filter((delteam) => delteam.strteam !== team);
       fetch("https://leagueteamtracker.herokuapp.com/favorites", {
         method: "delete",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(final),
       })
         .then((res) => res.json())
-        .then((data) => console.log(data));
+        .then((data) => data);
       setFavorites(check);
     } else {
-      const check = favorites.filter((delteam) => delteam.strTeam !== team);
+      const check = favorites.filter((delteam) => delteam.strteam !== team);
       setFavorites(check);
     }
   };
@@ -169,13 +176,24 @@ function App() {
         {" "}
         <Nav logOut={logOut} route={route} setRoute={setRoute}></Nav>
         {route === "home" ? ( //NFL OR EPL on click change route, show full league
-          <Leagues all={all} setRoute={setRoute}></Leagues>
+          <Leagues all={all} sendFavs={sendFavs} setRoute={setRoute}></Leagues>
         ) : route === "4391" ? (
-          <NFL nfl={nfl} setRoute={setRoute} showMe={showMe}></NFL>
+          <NFL
+            nfl={nfl}
+            setRoute={setRoute}
+            setTeam={setTeam}
+            showMe={showMe}
+          ></NFL>
         ) : route === "4328" ? (
-          <EPL epl={epl} setRoute={setRoute} showMe={showMe}></EPL>
+          <EPL
+            epl={epl}
+            setRoute={setRoute}
+            setTeam={setTeam}
+            showMe={showMe}
+          ></EPL>
         ) : route === "favorites" ? (
           <Favorites
+            sendFavs={sendFavs}
             favHandler={favHandler}
             guest={guest}
             favorites={favorites}

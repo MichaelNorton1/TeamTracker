@@ -24,33 +24,26 @@ const Root = styled("div")({
   [`& .${classes.title}`]: { display: "flex" },
 });
 
-const SingleTeam = ({ filtered, setRoute, favHandler, favorites }) => {
+const SingleTeam = ({ filtered, setRoute, favHandler }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
+    // if (
+    //   typeof filtered[0] === "object" &&
+    //   favorites !== undefined &&
+    //   favorites[0] !== undefined &&
+    //   dis === false
+    // ) {
+
+    // }
   }, []);
 
   const [buttonText, setButtonText] = useState("add to favorites");
   const [dis, setDisable] = useState(false);
-  const func = () => {
-    favHandler();
+  const func = (e) => {
+    favHandler(e);
     setButtonText("added to favorites");
     setDisable(true);
   };
-  useEffect(() => {
-    if (
-      typeof filtered[0] === "object" &&
-      favorites !== undefined &&
-      favorites[0] !== undefined &&
-      dis === false
-    ) {
-      // here is the bug
-      return favorites.map((team) =>
-        team.strTeam === filtered[0].strTeam
-          ? func()
-          : setButtonText("add to favorites")
-      );
-    }
-  });
 
   return (
     <Root>
@@ -61,16 +54,16 @@ const SingleTeam = ({ filtered, setRoute, favHandler, favorites }) => {
           <ArrowBackIcon
             className={classes.title}
             fontSize="large"
-            onClick={() => setRoute(filtered[0].idLeague)}
+            onClick={() => setRoute(filtered[0].idleague)}
           ></ArrowBackIcon>
         </Button>
       </div>
-      <Card name={filtered[0].strTeam} value={filtered[0].strTeam}>
+      <Card name={filtered[0].strteam} value={filtered[0].strteam}>
         <Button
           disabled={dis}
           name={filtered[0]}
           onClick={() => {
-            func();
+            func(filtered[0].strteam);
           }}
           color="primary"
           variant="contained"
@@ -81,12 +74,12 @@ const SingleTeam = ({ filtered, setRoute, favHandler, favorites }) => {
         <CardActionArea>
           <CardMedia
             cursor="pointer"
-            name={filtered[0].strTeam}
+            name={filtered[0].strteam}
             className={classes.media}
             component="img"
-            image={filtered[0].strTeamBadge}
+            image={filtered[0].strteambadge}
           />
-          <CardContent name={filtered[0].strTeam}>
+          <CardContent name={filtered[0].strteam}>
             <Typography
               name={filtered[0].strDescriptionEN}
               align="left"
@@ -94,7 +87,7 @@ const SingleTeam = ({ filtered, setRoute, favHandler, favorites }) => {
               color="textPrimary"
               component="p"
             >
-              {filtered[0].strDescriptionEN}
+              {filtered[0].strdescriptionen}
             </Typography>
           </CardContent>
         </CardActionArea>

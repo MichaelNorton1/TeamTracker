@@ -61,7 +61,7 @@ function Register({ setRoute, setGuest, setUserId }) {
   const register = (e) => {
     e.preventDefault();
     if (!pass || !signEmail || !name) {
-      return console.log("incorrect");
+      return alert("Entries are not valid");
     }
     const stuff = { email: signEmail, password: pass, name: name };
     fetch("https://leagueteamtracker.herokuapp.com/register", {
@@ -71,6 +71,7 @@ function Register({ setRoute, setGuest, setUserId }) {
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         if (data.userid) {
           setRoute("home");
           setUserId(data.userid);

@@ -31,7 +31,11 @@ const Root = styled("div")({
   },
 });
 
-const EPL = ({ epl, showMe, setRoute }) => {
+const EPL = ({ epl, showMe, setRoute, setTeam }) => {
+  const teamHandler = (e) => {
+    setTeam(e);
+    showMe();
+  };
   return epl === undefined ? (
     <div></div>
   ) : (
@@ -63,26 +67,32 @@ const EPL = ({ epl, showMe, setRoute }) => {
         >
           {" "}
           {epl.map((team) => (
-            <Grid key={team.strTeam} item xs>
+            <Grid key={team.strteam} item xs>
               {" "}
-              <Card name={team.strTeam} onClick={showMe} value={team.strTeam}>
+              <Card
+                name={team.strteam}
+                onClick={() => {
+                  teamHandler(team.strteam);
+                }}
+                value={team.strteam}
+              >
                 <CardActionArea>
                   <CardMedia
                     cursor="pointer"
-                    name={team.strTeam}
+                    id={team.strteam}
                     className={classes.media}
                     component="img"
-                    image={team.strTeamBadge}
+                    image={team.strteambadge}
                   />
-                  <CardContent name={team.strTeam}>
+                  <CardContent name={team.strteam}>
                     <Typography
-                      name={team.strTeam}
+                      id={team.strteam}
                       align="center"
                       variant="h6"
                       color="textPrimary"
                       component="p"
                     >
-                      {team.strTeam}
+                      {team.strteam}
                     </Typography>
                   </CardContent>
                 </CardActionArea>
