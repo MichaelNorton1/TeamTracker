@@ -4,11 +4,13 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 
 import Container from "@mui/material/Container";
+import { Box } from "@mui/material";
 
 const PREFIX = "Register";
 
@@ -46,6 +48,7 @@ function Register({ setRoute, setUserId }) {
   const [signEmail, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [name, setName] = useState("");
+  const [isLoading, setLoadin] = useState(false);
 
   const onEmailChange = (event) => {
     setEmail(event.target.value);
@@ -60,6 +63,7 @@ function Register({ setRoute, setUserId }) {
 
   const register = (e) => {
     e.preventDefault();
+    setLoadin(true);
     if (!pass || !signEmail || !name) {
       return alert("Entries are not valid");
     }
@@ -75,6 +79,7 @@ function Register({ setRoute, setUserId }) {
       .then((data) => {
         console.log(data);
         if (data.userid) {
+          setLoadin(false);
           setRoute("home");
           setUserId(data.userid);
         }
@@ -134,16 +139,23 @@ function Register({ setRoute, setUserId }) {
             id="name"
           />
 
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            onClick={() => register}
-          >
-            Register
-          </Button>
+          {isLoading ? (
+            <Box sx={{ textAlign: "center" }}>
+              {" "}
+              <CircularProgress></CircularProgress>
+            </Box>
+          ) : (
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={() => register}
+            >
+              Register
+            </Button>
+          )}
         </form>
         <Button
           type="submit"

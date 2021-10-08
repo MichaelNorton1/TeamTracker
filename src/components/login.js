@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { styled } from "@mui/material/styles";
 import Avatar from "@mui/material/Avatar";
+import CircularProgress from "@mui/material/CircularProgress";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -12,6 +13,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 
 import Container from "@mui/material/Container";
+import { Box } from "@mui/material";
 
 const PREFIX = "Login";
 
@@ -48,6 +50,7 @@ const StyledContainer = styled(Container)(({ theme }) => ({
 function Login({ setRoute, setGuest, setUserId }) {
   const [signEmail, setEmail] = useState("");
   const [pass, setPass] = useState("");
+  const [isLoading, setLoadin] = useState(false);
 
   const onEmailChange = (event) => {
     setEmail(event.target.value);
@@ -63,6 +66,7 @@ function Login({ setRoute, setGuest, setUserId }) {
   };
   const userLogIn = (e) => {
     e.preventDefault();
+    setLoadin(true);
     if (!pass || !signEmail) {
       return alert("Please enter correct information");
     }
@@ -76,6 +80,7 @@ function Login({ setRoute, setGuest, setUserId }) {
       .then((res) => res.json())
       .then((data) => {
         if (data.userid) {
+          setLoadin(false);
           setRoute("home");
           setUserId(data.userid);
         }
@@ -125,17 +130,23 @@ function Login({ setRoute, setGuest, setUserId }) {
             id="password"
             autoComplete="current-password"
           />
-
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            onClick={() => userLogIn}
-          >
-            Sign In
-          </Button>
+          {isLoading ? (
+            <Box sx={{ textAlign: "center" }}>
+              {" "}
+              <CircularProgress sx={{}}></CircularProgress>
+            </Box>
+          ) : (
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={() => userLogIn}
+            >
+              Sign In
+            </Button>
+          )}
 
           <Grid container>
             <Grid onClick={() => setRoute("register")} item>
