@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/TeamTracker/static/css/main.a617e044.chunk.css",
-    "main.js": "/TeamTracker/static/js/main.922951ce.chunk.js",
-    "main.js.map": "/TeamTracker/static/js/main.922951ce.chunk.js.map",
+    "main.js": "/TeamTracker/static/js/main.55fb63f2.chunk.js",
+    "main.js.map": "/TeamTracker/static/js/main.55fb63f2.chunk.js.map",
     "runtime-main.js": "/TeamTracker/static/js/runtime-main.7b102b4a.js",
     "runtime-main.js.map": "/TeamTracker/static/js/runtime-main.7b102b4a.js.map",
-    "static/js/2.04fdf39b.chunk.js": "/TeamTracker/static/js/2.04fdf39b.chunk.js",
-    "static/js/2.04fdf39b.chunk.js.map": "/TeamTracker/static/js/2.04fdf39b.chunk.js.map",
+    "static/js/2.b07eff52.chunk.js": "/TeamTracker/static/js/2.b07eff52.chunk.js",
+    "static/js/2.b07eff52.chunk.js.map": "/TeamTracker/static/js/2.b07eff52.chunk.js.map",
     "static/js/3.5402d834.chunk.js": "/TeamTracker/static/js/3.5402d834.chunk.js",
     "static/js/3.5402d834.chunk.js.map": "/TeamTracker/static/js/3.5402d834.chunk.js.map",
     "index.html": "/TeamTracker/index.html",
     "static/css/main.a617e044.chunk.css.map": "/TeamTracker/static/css/main.a617e044.chunk.css.map",
-    "static/js/2.04fdf39b.chunk.js.LICENSE.txt": "/TeamTracker/static/js/2.04fdf39b.chunk.js.LICENSE.txt"
+    "static/js/2.b07eff52.chunk.js.LICENSE.txt": "/TeamTracker/static/js/2.b07eff52.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.7b102b4a.js",
-    "static/js/2.04fdf39b.chunk.js",
+    "static/js/2.b07eff52.chunk.js",
     "static/css/main.a617e044.chunk.css",
-    "static/js/main.922951ce.chunk.js"
+    "static/js/main.55fb63f2.chunk.js"
   ]
 }
