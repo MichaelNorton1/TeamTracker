@@ -36,6 +36,7 @@ const NFL = ({ nfl, showMe, setRoute, setTeam }) => {
     setTeam(e);
     showMe();
   };
+
   return nfl === undefined ? (
     <div></div>
   ) : (
@@ -90,7 +91,7 @@ const NFL = ({ nfl, showMe, setRoute, setTeam }) => {
                       color="textPrimary"
                       component="p"
                     >
-                      {team.strteam}
+                      {team.strteam.toUpperCase()}
                     </Typography>
                   </CardContent>
                 </CardActionArea>

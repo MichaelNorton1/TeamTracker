@@ -92,7 +92,7 @@ const EPL = ({ epl, showMe, setRoute, setTeam }) => {
                       color="textPrimary"
                       component="p"
                     >
-                      {team.strteam}
+                      {team.strteam.toUpperCase()}
                     </Typography>
                   </CardContent>
                 </CardActionArea>

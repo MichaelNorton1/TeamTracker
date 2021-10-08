@@ -89,7 +89,7 @@ const Favorites = ({ sendFavs, favorites, deleteHandler }) => {
                   component="img"
                   image={team.strteambadge}
                 ></CardMedia>
-                <Typography align="center">{team.strteam}</Typography>
+                <Typography align="center"></Typography>
               </CardActionArea>{" "}
               <List>
                 <ListItem>

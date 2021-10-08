@@ -24,8 +24,9 @@ const Root = styled("div")({
   [`& .${classes.title}`]: { display: "flex" },
 });
 
-const SingleTeam = ({ filtered, setRoute, favHandler }) => {
+const SingleTeam = ({ filtered, setRoute, favHandler, descriptions }) => {
   useEffect(() => {
+    finalDescription();
     window.scrollTo(0, 0);
     // if (
     //   typeof filtered[0] === "object" &&
@@ -45,6 +46,16 @@ const SingleTeam = ({ filtered, setRoute, favHandler }) => {
     setDisable(true);
   };
 
+  const finalDescription = () => {
+    let stuff = "";
+    descriptions.forEach((element) => {
+      const lower = element.team.toLowerCase();
+      if (filtered[0].strteam === lower) {
+        stuff = element.description;
+      }
+    });
+    return stuff;
+  };
   return (
     <Root>
       {" "}
@@ -87,7 +98,7 @@ const SingleTeam = ({ filtered, setRoute, favHandler }) => {
               color="textPrimary"
               component="p"
             >
-              {filtered[0].strdescriptionen}
+              {finalDescription()}
             </Typography>
           </CardContent>
         </CardActionArea>

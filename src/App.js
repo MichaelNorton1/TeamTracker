@@ -30,6 +30,8 @@ function App() {
   const [favorites, setFavorites] = useState([]);
   const [epl, setEpl] = useState([]);
   const [nfl, setNFL] = useState([]);
+  const [eplDescript, setEplDescript] = useState([]);
+  const [nflDescript, setNflDescript] = useState([]);
   //route
 
   useEffect(
@@ -40,9 +42,17 @@ function App() {
       )
         .then((res) => res.json())
         .then((data) => {
+          const stuff = data.teams;
+          const teams = stuff.map((team) => team.strTeam);
+          const descriptions = stuff.map((team) => team.strDescriptionEN);
+
+          const combined = teams.map((team, index) => {
+            return { team: team, description: descriptions[index] };
+          });
+
           const epl = JSON.stringify(data);
           const final = JSON.parse(epl.toLowerCase());
-
+          setEplDescript(combined);
           setEpl(final.teams);
         });
 
@@ -51,6 +61,14 @@ function App() {
       )
         .then((res) => res.json())
         .then((data) => {
+          const stuff = data.teams;
+          const teams = stuff.map((team) => team.strTeam);
+          const descriptions = stuff.map((team) => team.strDescriptionEN);
+
+          const combined = teams.map((team, index) => {
+            return { team: team, description: descriptions[index] };
+          });
+          setNflDescript(combined);
           const nfl = JSON.stringify(data);
           const final = JSON.parse(nfl.toLowerCase());
           setNFL(final.teams);
@@ -78,7 +96,7 @@ function App() {
     // eslint-disable-next-line
     [userId]
   );
-
+  const descriptions = [...eplDescript, ...nflDescript];
   const all = [
     {
       league: "NFL",
@@ -201,6 +219,7 @@ function App() {
           ></Favorites>
         ) : route === "single" ? (
           <SingleTeam
+            descriptions={descriptions}
             filtered={filtered}
             favHandler={favHandler}
             setRoute={setRoute}

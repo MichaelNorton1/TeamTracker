@@ -66,7 +66,8 @@ function Login({ setRoute, setGuest, setUserId }) {
     if (!pass || !signEmail) {
       return alert("Please enter correct information");
     }
-    const stuff = { email: signEmail, password: pass };
+    const lower = signEmail.toLowerCase();
+    const stuff = { email: lower, password: pass };
     fetch("https://leagueteamtracker.herokuapp.com/signin", {
       method: "post",
       headers: { "Content-type": "application/json" },
