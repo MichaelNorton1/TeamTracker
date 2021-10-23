@@ -68,6 +68,7 @@ function Login({ setRoute, setGuest, setUserId }) {
     e.preventDefault();
     setLoadin(true);
     if (!pass || !signEmail) {
+      setLoadin(false);
       return alert("Please enter correct information");
     }
     const lower = signEmail.toLowerCase();
@@ -79,13 +80,17 @@ function Login({ setRoute, setGuest, setUserId }) {
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         if (data.userid) {
           setLoadin(false);
           setRoute("home");
           setUserId(data.userid);
+        } else {
+          setLoadin(false);
         }
       })
       .catch((err) => {
+        setLoadin(false);
         console.log(err);
       });
   };

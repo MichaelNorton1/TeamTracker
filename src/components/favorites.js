@@ -8,6 +8,7 @@ import {
   ListItem,
   Typography,
 } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import { styled } from "@mui/material/styles";
 
@@ -44,6 +45,7 @@ const Favorites = ({ sendFavs, favorites, deleteHandler }) => {
   const [nextGamePhoto, setPhoto] = useState("");
   const [description, setDescription] = useState("");
   const [open, setOpen] = useState(false);
+  const [isLoading, setLoadin] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -55,6 +57,7 @@ const Favorites = ({ sendFavs, favorites, deleteHandler }) => {
   );
   //make an async function that awaits the pictures
   const getNextTeam = (teamid) => {
+    setLoadin(true);
     fetch("https://leagueteamtracker.herokuapp.com/favorites/next", {
       method: "post",
       headers: { "Content-type": "application/json" },
@@ -68,7 +71,10 @@ const Favorites = ({ sendFavs, favorites, deleteHandler }) => {
         });
         setPhoto(data.pic);
       })
-      .then(() => handleOpen())
+      .then(() => {
+        handleOpen();
+        setLoadin(false);
+      })
       .catch((err) => console.log(err));
   };
 
@@ -99,12 +105,17 @@ const Favorites = ({ sendFavs, favorites, deleteHandler }) => {
                     handleClose={handleClose}
                     nextGamePhoto={nextGamePhoto}
                   ></NextTeam>
+
                   <Button
                     onClick={() => getNextTeam(team.idteam)}
                     variant="outlined"
                     align="right"
                   >
-                    Next Opponent
+                    {isLoading ? (
+                      <CircularProgress></CircularProgress>
+                    ) : (
+                      "Next Opponent"
+                    )}
                   </Button>
                 </ListItem>
                 <ListItem>

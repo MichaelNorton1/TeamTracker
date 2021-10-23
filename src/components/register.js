@@ -65,6 +65,7 @@ function Register({ setRoute, setUserId }) {
     e.preventDefault();
     setLoadin(true);
     if (!pass || !signEmail || !name) {
+      setLoadin(false);
       return alert("Entries are not valid");
     }
     const lower = signEmail.toLowerCase();
@@ -82,9 +83,14 @@ function Register({ setRoute, setUserId }) {
           setLoadin(false);
           setRoute("home");
           setUserId(data.userid);
+        } else {
+          setLoadin(false);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setLoadin(false);
+        console.log(err);
+      });
   };
 
   return (
