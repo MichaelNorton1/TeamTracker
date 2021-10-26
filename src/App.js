@@ -36,7 +36,7 @@ function App() {
 
   useEffect(
     () => {
-      //API Call inside of useEffect so it is only called once
+      //Sets English premier league teams
       fetch(
         "https://www.thesportsdb.com/api/v1/json/1/search_all_teams.php?l=English%20Premier%20League"
       )
@@ -55,7 +55,7 @@ function App() {
           setEplDescript(combined);
           setEpl(final.teams);
         });
-
+      // Sets NFL teams
       fetch(
         "https://www.thesportsdb.com/api/v1/json/1/search_all_teams.php?l=NFL"
       )
@@ -76,6 +76,8 @@ function App() {
         .catch((err) => console.log(err));
 
       if (guest === false && route === "home") {
+        //if user logged in fetches teams based on returned id
+
         fetch("https://leagueteamtracker.herokuapp.com/favorites/id", {
           method: "post",
           headers: { "Content-type": "application/json" },
@@ -111,9 +113,10 @@ function App() {
       leagueId: "4328",
     },
   ];
-  const leagues = [...epl, ...nfl];
+  const leagues = [...epl, ...nfl]; // merges teams into single array
   const filtered = leagues.filter((x) => x.strteam === team);
   const showMe = () => {
+    //sets Route to single team view
     if (filtered.length > 0) {
       setRoute("single");
     }
@@ -123,14 +126,14 @@ function App() {
 
   const favHandler = (single) => {
     //filtering out teams that have already been added to favorites list
-    setFavorites((prev) => {
-      const dupl = prev.filter((x) => x.strteam === single);
+    setFavorites((prevState) => {
+      const dupl = prevState.filter((x) => x.strteam === single);
       const soccer = epl.filter((x) => x.strteam === single);
       const foot = nfl.filter((x) => x.strteam === single);
       if (dupl.length === 0) {
-        return [...soccer, ...foot, ...prev];
+        return [...soccer, ...foot, ...prevState];
       } else {
-        return [...prev];
+        return [...prevState];
       }
     });
   };
@@ -140,7 +143,7 @@ function App() {
       const names = favorites.map((team) => team.strteam);
       const images = favorites.map((team) => team.strteambadge);
 
-      const stuff = names.map((name, id) => {
+      const userTeams = names.map((name, id) => {
         return {
           id: userId,
           strTeam: name,
@@ -152,7 +155,7 @@ function App() {
       fetch("https://leagueteamtracker.herokuapp.com/favorites", {
         method: "post",
         headers: { "Content-type": "application/json" },
-        body: JSON.stringify(stuff),
+        body: JSON.stringify(userTeams),
       })
         .then((res) => res.json())
         .then((data) => data)
@@ -169,10 +172,12 @@ function App() {
   };
 
   const deleteHandler = (team) => {
+    //filters out deleted teams from favorites
     if (guest === false) {
       const final = { team: team, id: userId };
 
       const check = favorites.filter((delteam) => delteam.strteam !== team);
+      // send request to Postgres to delete
       fetch("https://leagueteamtracker.herokuapp.com/favorites", {
         method: "delete",
         headers: { "Content-type": "application/json" },
@@ -180,7 +185,7 @@ function App() {
       })
         .then((res) => res.json())
         .then((data) => data);
-      setFavorites(check);
+      setFavorites(check); // resets the state without deleted team
     } else {
       const check = favorites.filter((delteam) => delteam.strteam !== team);
       setFavorites(check);

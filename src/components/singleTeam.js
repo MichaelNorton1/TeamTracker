@@ -28,14 +28,6 @@ const SingleTeam = ({ filtered, setRoute, favHandler, descriptions }) => {
   useEffect(() => {
     finalDescription();
     window.scrollTo(0, 0);
-    // if (
-    //   typeof filtered[0] === "object" &&
-    //   favorites !== undefined &&
-    //   favorites[0] !== undefined &&
-    //   dis === false
-    // ) {
-
-    // }
   }, []);
 
   const [buttonText, setButtonText] = useState("add to favorites");

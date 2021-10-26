@@ -55,7 +55,7 @@ const Favorites = ({ sendFavs, favorites, deleteHandler }) => {
     }, // eslint-disable-next-line
     []
   );
-  //make an async function that awaits the pictures
+  // an async function that awaits the pictures
   const getNextTeam = (teamid) => {
     setLoadin(true);
     fetch("https://leagueteamtracker.herokuapp.com/favorites/next", {
