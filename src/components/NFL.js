@@ -37,8 +37,8 @@ const NFL = ({ nfl, showMe, setRoute, setTeam }) => {
     showMe();
   };
 
-  return nfl === undefined ? (
-    <div></div>
+  return nfl === undefined || nfl.length < 1 ? (
+    <div>Looks like something went wrong .</div>
   ) : (
     <Root>
       <div>

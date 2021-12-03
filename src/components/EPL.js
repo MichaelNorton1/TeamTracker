@@ -36,8 +36,8 @@ const EPL = ({ epl, showMe, setRoute, setTeam }) => {
     setTeam(e);
     showMe();
   };
-  return epl === undefined ? (
-    <div></div>
+  return epl === undefined || epl.length < 1 ? (
+    <div>Looks like something went wrong. </div>
   ) : (
     <Root>
       <div>

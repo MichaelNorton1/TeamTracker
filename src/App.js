@@ -38,7 +38,7 @@ function App() {
     () => {
       //Sets English premier league teams
       fetch(
-        "https://www.thesportsdb.com/api/v1/json/1/search_all_teams.php?l=English%20Premier%20League"
+        "https://www.thesportsdb.com/api/v1/json/2/search_all_teams.php?l=English%20Premier%20League"
       )
         .then((res) => res.json())
         .then((data) => {
@@ -54,10 +54,11 @@ function App() {
           const final = JSON.parse(epl.toLowerCase());
           setEplDescript(combined);
           setEpl(final.teams);
-        });
+        })
+        .catch((err) => console.log(err));
       // Sets NFL teams
       fetch(
-        "https://www.thesportsdb.com/api/v1/json/1/search_all_teams.php?l=NFL"
+        "https://www.thesportsdb.com/api/v1/json/2/search_all_teams.php?l=NFL"
       )
         .then((res) => res.json())
         .then((data) => {

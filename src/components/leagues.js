@@ -33,7 +33,7 @@ const StyledGrid = styled(Grid)({
 const Leagues = ({ all, setRoute, sendFavs }) => {
   useEffect(() => {
     sendFavs();
-  }, []);
+  }, [sendFavs]);
   return all === undefined ? (
     <div></div>
   ) : (
