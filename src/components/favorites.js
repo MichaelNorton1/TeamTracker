@@ -7,6 +7,7 @@ import {
   List,
   ListItem,
   Typography,
+  autocompleteClasses,
 } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -33,11 +34,10 @@ const StyledGrid = styled(Grid)({
     justifyContent: "flex-start",
     alignItems: "flex-start",
   },
-  [`& .${classes.title}`]: { display: "flex" },
+  [`& .${classes.title}`]: { display: "block", margin: "10px" },
   [`& .${classes.media}`]: {
-    margin: "left",
-    height: "auto",
     width: 200,
+    height: "100%",
   },
 });
 
@@ -55,6 +55,8 @@ const Favorites = ({ sendFavs, favorites, deleteHandler }) => {
     }, // eslint-disable-next-line
     []
   );
+  //async function that gets next five teams
+
   // an async function that awaits the pictures
   const getNextTeam = (teamid) => {
     setLoadin(true);
@@ -79,7 +81,14 @@ const Favorites = ({ sendFavs, favorites, deleteHandler }) => {
   };
 
   return (
-    <StyledGrid>
+    <StyledGrid
+      style={{
+        display: "flex",
+        width: "100%",
+        flexWrap: "wrap",
+        justifyContent: "center",
+      }}
+    >
       {favorites === undefined || favorites.length < 1 || favorites === null ? (
         <div>Add teams to Favorites!</div>
       ) : (
@@ -118,11 +127,7 @@ const Favorites = ({ sendFavs, favorites, deleteHandler }) => {
                     )}
                   </Button>
                 </ListItem>
-                <ListItem>
-                  {/* <Button variant="outlined" align="right">
-                    to be added*
-                  </Button> */}
-                </ListItem>
+                <ListItem></ListItem>
                 <ListItem>
                   <Button
                     onClick={() => {
